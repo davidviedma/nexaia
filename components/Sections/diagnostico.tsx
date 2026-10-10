@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import {
   CheckmarkCircle02Icon,
@@ -12,10 +12,25 @@ import { cn } from "@/lib/utils"
 import { Reveal } from "@/components/reveal"
 import { Kicker, SectionHeading } from "@/components/section-heading"
 import { Button } from "@/components/ui/button"
+import { useInView } from "@/hooks/use-in-view"
 
 export function Diagnostico() {
   const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const { ref, inView } = useInView<HTMLDivElement>({
+    threshold: 0.4,
+    once: false,
+  })
   const d = diagnostico.deliverables
+
+  useEffect(() => {
+    if (paused || !inView) return
+    const id = setInterval(
+      () => setActive((i) => (i + 1) % diagnostico.phases.length),
+      3600
+    )
+    return () => clearInterval(id)
+  }, [paused, inView])
 
   return (
     <section
@@ -42,7 +57,12 @@ export function Diagnostico() {
         />
 
         {/* Phases */}
-        <div className="grid grid-cols-1 gap-3 md:grid-cols-3">
+        <div
+          ref={ref}
+          className="grid grid-cols-1 gap-3 md:grid-cols-3"
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => setPaused(false)}
+        >
           {diagnostico.phases.map((p, i) => {
             const isActive = active === i
             return (

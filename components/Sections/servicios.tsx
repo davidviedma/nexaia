@@ -126,6 +126,16 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
     const rect = el.getBoundingClientRect()
     el.style.setProperty("--mx", `${e.clientX - rect.left}px`)
     el.style.setProperty("--my", `${e.clientY - rect.top}px`)
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const px = (e.clientX - rect.left) / rect.width - 0.5
+    const py = (e.clientY - rect.top) / rect.height - 0.5
+    el.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-6px)`
+  }
+
+  function onLeave() {
+    const el = ref.current
+    if (!el) return
+    el.style.transform = ""
   }
 
   return (
@@ -134,11 +144,13 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
         href="#contacto"
         className="block h-full"
         aria-label={`${item.title}: ${item.text} Solicitar diagnóstico`}
+        data-cursor="Ver"
       >
         <div
           ref={ref}
           onMouseMove={onMove}
-          className="group relative flex h-full flex-col gap-6 overflow-hidden rounded-3xl border border-line bg-surface p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[var(--ease-out-expo)] [--mx:-999px] [--my:-999px] hover:-translate-y-1.5 hover:border-brand-100 hover:shadow-[0_28px_60px_-28px_rgba(25,81,252,0.35)] sm:p-7"
+          onMouseLeave={onLeave}
+          className="group relative flex h-full flex-col gap-6 overflow-hidden rounded-3xl border border-line bg-surface p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[var(--ease-out-expo)] [--mx:-999px] [--my:-999px] hover:border-brand-100 hover:shadow-[0_28px_60px_-28px_rgba(25,81,252,0.35)] sm:p-7"
         >
           <div
             aria-hidden

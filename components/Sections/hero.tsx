@@ -42,6 +42,37 @@ function RotatingWord({ words }: { words: string[] }) {
 
 export function Hero() {
   const sectionRef = useRef<HTMLElement>(null)
+  const contentRef = useRef<HTMLDivElement>(null)
+  const fieldRef = useRef<HTMLDivElement>(null)
+
+  // Content drifts up and fades as the hero scrolls away; the node field
+  // moves slower, which gives the layers depth.
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const y = window.scrollY
+      const vh = window.innerHeight
+      if (y > vh * 1.2) return
+      const p = Math.min(1, y / (vh * 0.9))
+      if (contentRef.current) {
+        contentRef.current.style.transform = `translate3d(0, ${(y * 0.28).toFixed(1)}px, 0)`
+        contentRef.current.style.opacity = String(1 - p * 0.9)
+      }
+      if (fieldRef.current) {
+        fieldRef.current.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`
+      }
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    window.addEventListener("scroll", onScroll, { passive: true })
+    return () => {
+      window.removeEventListener("scroll", onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const el = sectionRef.current
@@ -100,10 +131,15 @@ export function Hero() {
         }}
       />
 
-      <NodeField className="-z-10 opacity-80" />
+      <div
+        ref={fieldRef}
+        className="absolute inset-0 -z-10 will-change-transform"
+      >
+        <NodeField className="opacity-80" />
+      </div>
 
       <div className="relative z-10 container mx-auto flex flex-1 flex-col justify-center px-6 pt-32 pb-20 sm:px-10 lg:px-16 lg:pt-36">
-        <div className="max-w-5xl">
+        <div ref={contentRef} className="max-w-5xl will-change-transform">
           <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase backdrop-blur-sm [animation-delay:120ms]">
             <span className="animate-pulse-dot size-1.5 rounded-full bg-cyan" />
             {hero.kicker}

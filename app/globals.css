@@ -415,7 +415,11 @@ input[type="range"].nexa-range::-moz-range-thumb {
   }
   html {
     @apply font-sans;
-    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html:not(.lenis) {
+      scroll-behavior: smooth;
+    }
   }
   body {
     @apply bg-background text-foreground;
@@ -428,4 +432,125 @@ input[type="range"].nexa-range::-moz-range-thumb {
     background: var(--color-brand-600);
     color: #ffffff;
   }
+}
+
+/* ── Motion layer: preloader, custom cursor ─────────────────── */
+@keyframes preloader-logo {
+  0% {
+    opacity: 0;
+    transform: scale(0.7) rotate(-6deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
+}
+
+@keyframes preloader-bar {
+  0% {
+    transform: scaleX(0);
+  }
+  100% {
+    transform: scaleX(1);
+  }
+}
+
+.animate-preloader-logo {
+  animation: preloader-logo 0.9s var(--ease-out-expo) both;
+}
+
+.animate-preloader-bar {
+  animation: preloader-bar 1.4s var(--ease-out-expo) both;
+}
+
+/* Static navy cover until the React preloader mounts (avoids a flash). */
+html.is-loading body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: #061b3c;
+}
+
+/* Hold the hero intro while the curtain is up. */
+html.is-loading .animate-rise,
+html.is-loading .animate-fade-up {
+  animation-play-state: paused;
+}
+
+html.has-cursor,
+html.has-cursor a,
+html.has-cursor button,
+html.has-cursor [role="button"],
+html.has-cursor summary,
+html.has-cursor input[type="range"] {
+  cursor: none;
+}
+
+.nexa-cursor-dot,
+.nexa-cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  pointer-events: none;
+  border-radius: 999px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+html.cursor-active .nexa-cursor-dot,
+html.cursor-active .nexa-cursor-ring {
+  opacity: 1;
+}
+
+.nexa-cursor-dot {
+  width: 6px;
+  height: 6px;
+  background: #ffffff;
+  mix-blend-mode: difference;
+}
+
+.nexa-cursor-ring {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border: 1.5px solid #ffffff;
+  mix-blend-mode: difference;
+  transition:
+    width 0.35s var(--ease-out-expo),
+    height 0.35s var(--ease-out-expo),
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    opacity 0.3s ease;
+}
+
+.nexa-cursor-ring[data-state="hover"] {
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.nexa-cursor-ring[data-label="true"] {
+  width: 80px;
+  height: 80px;
+  mix-blend-mode: normal;
+  background: var(--color-brand-600);
+  border-color: var(--color-brand-600);
+}
+
+.nexa-cursor-ring span {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+.nexa-cursor-dot[data-state="hidden"],
+.nexa-cursor-ring[data-state="hidden"],
+.nexa-cursor-dot[data-state="hover"] {
+  opacity: 0 !important;
 }

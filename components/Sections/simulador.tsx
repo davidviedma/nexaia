@@ -51,6 +51,7 @@ function Slider({
       <input
         type="range"
         className="nexa-range"
+        data-cursor="Mover"
         min={min}
         max={max}
         step={step}

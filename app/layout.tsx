@@ -4,6 +4,9 @@ import { Inter, Geist_Mono } from "next/font/google"
 import "./globals.css"
 import { cn } from "@/lib/utils"
 import { SITE_URL, site } from "@/lib/site"
+import { SmoothScroll } from "@/components/motion/smooth-scroll"
+import { Cursor } from "@/components/motion/cursor"
+import { Preloader } from "@/components/motion/preloader"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -87,13 +90,26 @@ export default function RootLayout({
     >
       <head>
         <script
+          // Marks the document as loading before hydration so the hero intro
+          // waits for the brand curtain (shown once per session).
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{if(!sessionStorage.getItem('nexa-intro')&&!matchMedia('(prefers-reduced-motion: reduce)').matches){document.documentElement.classList.add('is-loading')}}catch(e){}",
+          }}
+        />
+        <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify(organizationSchema).replace(/</g, "\\u003c"),
           }}
         />
       </head>
-      <body className="overflow-x-clip">{children}</body>
+      <body className="overflow-x-clip">
+        <Preloader />
+        <SmoothScroll />
+        <Cursor />
+        {children}
+      </body>
     </html>
   )
 }

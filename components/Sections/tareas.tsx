@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils"
 import { Reveal } from "@/components/reveal"
 import { Kicker } from "@/components/section-heading"
 import { useInView } from "@/hooks/use-in-view"
+import { Parallax } from "@/components/motion/parallax"
 
 const icons = [
   Message01Icon,
@@ -70,9 +71,11 @@ export function Tareas() {
             </Reveal>
             <Reveal delay={80}>
               <h2 className="flex items-start gap-4 sm:gap-6">
-                <span className="bg-gradient-to-b from-brand-400 to-cyan bg-clip-text text-[7.5rem] leading-[0.85] font-bold tracking-[-0.06em] text-transparent sm:text-[10rem] lg:text-[12rem]">
-                  {tareas.number}
-                </span>
+                <Parallax as="span" speed={-0.12} className="inline-block">
+                  <span className="bg-gradient-to-b from-brand-400 to-cyan bg-clip-text text-[7.5rem] leading-[0.85] font-bold tracking-[-0.06em] text-transparent sm:text-[10rem] lg:text-[12rem]">
+                    {tareas.number}
+                  </span>
+                </Parallax>
                 <span className="pt-2 text-3xl leading-[1.05] font-bold tracking-[-0.03em] text-balance sm:text-4xl lg:text-5xl">
                   {tareas.title}
                 </span>
@@ -98,6 +101,7 @@ export function Tareas() {
                         onClick={() => setActive(i)}
                         onMouseEnter={() => setActive(i)}
                         aria-pressed={isActive}
+                        data-cursor="Ver"
                         className={cn(
                           "group flex w-full items-center gap-4 border-t border-white/10 py-4 text-left transition-colors duration-300",
                           i === tareas.items.length - 1 && "border-b"
