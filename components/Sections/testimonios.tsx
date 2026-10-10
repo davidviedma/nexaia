@@ -31,7 +31,7 @@ function Card({ t, placeholder }: { t: Testimonio; placeholder: boolean }) {
     .slice(0, 2)
     .join("")
   return (
-    <figure className="flex w-[21rem] shrink-0 flex-col gap-5 rounded-[1.75rem] border border-white/10 bg-white/[0.05] p-6 text-white backdrop-blur-sm transition-colors duration-300 hover:bg-white/[0.09] sm:w-[24rem]">
+    <figure className="flex w-[21rem] shrink-0 flex-col gap-5 rounded-[1.75rem] border border-white/10 bg-white/[0.05] p-6 text-white transition-colors duration-300 hover:bg-white/[0.09] sm:w-[24rem]">
       <div className="flex items-center justify-between">
         <Stars />
         <span

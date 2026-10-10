@@ -112,7 +112,7 @@ export function Hero() {
       {/* Soft drifting blobs */}
       <div
         aria-hidden
-        className="animate-drift pointer-events-none absolute -top-40 right-[-10%] -z-10 h-[46rem] w-[46rem] rounded-full opacity-60 blur-3xl"
+        className="animate-drift pointer-events-none absolute -top-40 right-[-10%] -z-10 h-[46rem] w-[46rem] rounded-full opacity-60"
         style={{
           background:
             "radial-gradient(circle at 40% 40%, rgba(55,129,252,0.55), rgba(6,195,214,0.18) 45%, transparent 70%)",
@@ -120,7 +120,7 @@ export function Hero() {
       />
       <div
         aria-hidden
-        className="animate-drift pointer-events-none absolute top-1/3 left-[-20%] -z-10 h-[34rem] w-[34rem] rounded-full opacity-50 blur-3xl [animation-delay:-6s]"
+        className="animate-drift pointer-events-none absolute top-1/3 left-[-20%] -z-10 h-[34rem] w-[34rem] rounded-full opacity-50 [animation-delay:-6s]"
         style={{
           background:
             "radial-gradient(circle, rgba(11,44,177,0.9), transparent 65%)",
@@ -140,12 +140,12 @@ export function Hero() {
         ref={fieldRef}
         className="absolute inset-0 -z-10 will-change-transform"
       >
-        <NodeField className="opacity-80" />
+        <NodeField className="opacity-90" density={1.25} />
       </div>
 
       <div className="relative z-10 container mx-auto flex flex-1 flex-col justify-center px-6 pt-32 pb-20 sm:px-10 lg:px-16 lg:pt-36">
         <div ref={contentRef} className="max-w-5xl will-change-transform">
-          <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase backdrop-blur-sm [animation-delay:120ms]">
+          <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase [animation-delay:120ms]">
             <span className="animate-pulse-dot size-1.5 rounded-full bg-cyan" />
             <ShinyText color="rgba(6,195,214,0.75)" shine="#ffffff" speed={3.5}>
               {hero.kicker}

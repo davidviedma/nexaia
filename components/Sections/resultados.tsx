@@ -134,7 +134,11 @@ export function Resultados() {
             >
               <div
                 aria-hidden
-                className="pointer-events-none absolute -top-32 -right-32 size-96 rounded-full bg-brand-600/40 blur-3xl"
+                className="pointer-events-none absolute -top-32 -right-32 size-[30rem] rounded-full"
+                style={{
+                  background:
+                    "radial-gradient(circle, rgba(25,81,252,0.45), transparent 65%)",
+                }}
               />
               <div className="relative z-[2]">
                 <p className="text-[11px] font-bold tracking-[0.2em] text-cyan uppercase">

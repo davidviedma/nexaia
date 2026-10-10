@@ -125,11 +125,11 @@ export function Nav() {
           onMouseLeave={() => setHovered(false)}
           className={cn(
             "relative flex h-[60px] items-center overflow-hidden rounded-full",
-            "border backdrop-blur-2xl",
+            "border backdrop-blur-md",
             "transition-[width,background-color,border-color,box-shadow] duration-[480ms] ease-[var(--ease-spring)]",
             onDark
-              ? "border-white/10 bg-navy/70 shadow-[0_8px_40px_rgba(3,25,91,0.35),0_1px_0_rgba(255,255,255,0.08)_inset]"
-              : "border-ink/8 bg-white/80 shadow-[0_8px_40px_rgba(3,25,91,0.12),0_1px_0_rgba(255,255,255,0.8)_inset]"
+              ? "border-white/10 bg-navy/85 shadow-[0_8px_40px_rgba(3,25,91,0.35),0_1px_0_rgba(255,255,255,0.08)_inset]"
+              : "border-ink/8 bg-white/90 shadow-[0_8px_40px_rgba(3,25,91,0.12),0_1px_0_rgba(255,255,255,0.8)_inset]"
           )}
           style={{ width: islandWidth }}
         >
@@ -246,7 +246,7 @@ export function Nav() {
         <div
           className={cn(
             "absolute top-full mt-2 w-56 overflow-hidden rounded-3xl md:hidden",
-            "border border-ink/8 bg-white/95 backdrop-blur-2xl",
+            "border border-ink/8 bg-white/95 backdrop-blur-md",
             "shadow-[0_16px_48px_rgba(3,25,91,0.18)]",
             "flex flex-col gap-0.5 p-1.5",
             "origin-top transition-all duration-300 ease-[var(--ease-out-expo)]",

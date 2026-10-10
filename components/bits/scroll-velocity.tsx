@@ -39,6 +39,7 @@ export function VelocityRow({
     let dir = Math.sign(baseVelocity) || 1
     let last = performance.now()
     let raf = 0
+    let visible = false
 
     const ro = new ResizeObserver(() => {
       width = first.offsetWidth
@@ -46,6 +47,10 @@ export function VelocityRow({
     ro.observe(first)
 
     const loop = (now: number) => {
+      if (!visible) {
+        raf = 0
+        return
+      }
       const dt = Math.min(64, now - last) / 1000
       last = now
       const v = reduce ? 0 : getScrollVelocity()
@@ -59,11 +64,19 @@ export function VelocityRow({
       }
       raf = requestAnimationFrame(loop)
     }
-    raf = requestAnimationFrame(loop)
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible && !raf) {
+        last = performance.now()
+        raf = requestAnimationFrame(loop)
+      }
+    })
+    io.observe(track)
 
     return () => {
       cancelAnimationFrame(raf)
       ro.disconnect()
+      io.disconnect()
       unsubscribe()
     }
   }, [baseVelocity])

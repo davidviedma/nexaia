@@ -20,7 +20,7 @@ import { StarBorder } from "@/components/bits/surfaces"
 import { Magnetic } from "@/components/magnetic"
 
 const fieldClass =
-  "w-full rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 outline-none backdrop-blur-sm transition-[border-color,background-color,box-shadow] duration-300 focus:border-white focus:bg-white/15 focus:ring-4 focus:ring-white/15"
+  "w-full rounded-2xl border border-white/20 bg-white/10 px-5 py-4 text-base text-white placeholder:text-white/50 outline-none transition-[border-color,background-color,box-shadow] duration-300 focus:border-white focus:bg-white/15 focus:ring-4 focus:ring-white/15"
 
 export function Cta() {
   const [nombre, setNombre] = useState("")
@@ -92,7 +92,7 @@ export function Cta() {
           <Reveal variant="scale" delay={200} className="lg:col-span-6">
             <form
               onSubmit={onSubmit}
-              className="flex flex-col gap-4 rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 backdrop-blur-md sm:p-8"
+              className="flex flex-col gap-4 rounded-[2rem] border border-white/15 bg-white/[0.06] p-6 sm:p-8"
             >
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
                 <input

@@ -44,9 +44,14 @@ export function LogoLoop({
     let vel = speed
     let last = performance.now()
     let raf = 0
+    let visible = false
     const sign = direction === "left" ? 1 : -1
 
     const loop = (now: number) => {
+      if (!visible) {
+        raf = 0
+        return
+      }
       const dt = Math.min(64, now - last) / 1000
       last = now
       const target = hoverRef.current ? 0 : speed
@@ -58,10 +63,18 @@ export function LogoLoop({
       }
       raf = requestAnimationFrame(loop)
     }
-    raf = requestAnimationFrame(loop)
+    const io = new IntersectionObserver(([entry]) => {
+      visible = entry.isIntersecting
+      if (visible && !raf) {
+        last = performance.now()
+        raf = requestAnimationFrame(loop)
+      }
+    })
+    io.observe(track)
     return () => {
       cancelAnimationFrame(raf)
       ro.disconnect()
+      io.disconnect()
     }
   }, [speed, direction])
 

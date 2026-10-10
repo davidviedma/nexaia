@@ -57,7 +57,7 @@ export function Tareas() {
       {/* ambient glow */}
       <div
         aria-hidden
-        className="animate-drift pointer-events-none absolute -top-40 -right-40 h-[40rem] w-[40rem] rounded-full opacity-40 blur-3xl"
+        className="animate-drift pointer-events-none absolute -top-40 -right-40 h-[40rem] w-[40rem] rounded-full opacity-40"
         style={{
           background:
             "radial-gradient(circle, rgba(25,81,252,0.9), rgba(6,195,214,0.2) 50%, transparent 70%)",
@@ -153,13 +153,17 @@ export function Tareas() {
           <div className="lg:col-span-7 lg:pl-6">
             <Reveal delay={200} className="lg:sticky lg:top-28">
               <div
-                className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-7 backdrop-blur-sm sm:p-10"
+                className="relative overflow-hidden rounded-[2rem] border border-white/10 bg-white/[0.04] p-7 sm:p-10"
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
               >
                 <div
                   aria-hidden
-                  className="pointer-events-none absolute -top-24 -right-24 size-64 rounded-full bg-brand-600/30 blur-3xl"
+                  className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(25,81,252,0.35), transparent 65%)",
+                  }}
                 />
                 <div
                   key={active}
