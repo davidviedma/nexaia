@@ -60,7 +60,7 @@ export function Tareas() {
         className="animate-drift pointer-events-none absolute -top-40 -right-40 h-[40rem] w-[40rem] rounded-full opacity-40"
         style={{
           background:
-            "radial-gradient(circle, rgba(25,81,252,0.9), rgba(6,195,214,0.2) 50%, transparent 70%)",
+            "radial-gradient(circle closest-side, rgba(25,81,252,0.8), rgba(6,195,214,0.15) 55%, transparent 100%)",
         }}
       />
 
@@ -162,7 +162,7 @@ export function Tareas() {
                   className="pointer-events-none absolute -top-24 -right-24 size-80 rounded-full"
                   style={{
                     background:
-                      "radial-gradient(circle, rgba(25,81,252,0.35), transparent 65%)",
+                      "radial-gradient(circle closest-side, rgba(25,81,252,0.35), transparent 100%)",
                   }}
                 />
                 <div

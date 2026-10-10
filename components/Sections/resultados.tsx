@@ -137,7 +137,7 @@ export function Resultados() {
                 className="pointer-events-none absolute -top-32 -right-32 size-[30rem] rounded-full"
                 style={{
                   background:
-                    "radial-gradient(circle, rgba(25,81,252,0.45), transparent 65%)",
+                    "radial-gradient(circle closest-side, rgba(25,81,252,0.45), transparent 100%)",
                 }}
               />
               <div className="relative z-[2]">

@@ -115,7 +115,7 @@ export function Hero() {
         className="animate-drift pointer-events-none absolute -top-40 right-[-10%] -z-10 h-[46rem] w-[46rem] rounded-full opacity-60"
         style={{
           background:
-            "radial-gradient(circle at 40% 40%, rgba(55,129,252,0.55), rgba(6,195,214,0.18) 45%, transparent 70%)",
+            "radial-gradient(circle closest-side, rgba(55,129,252,0.5), rgba(6,195,214,0.14) 50%, transparent 100%)",
         }}
       />
       <div
@@ -123,7 +123,7 @@ export function Hero() {
         className="animate-drift pointer-events-none absolute top-1/3 left-[-20%] -z-10 h-[34rem] w-[34rem] rounded-full opacity-50 [animation-delay:-6s]"
         style={{
           background:
-            "radial-gradient(circle, rgba(11,44,177,0.9), transparent 65%)",
+            "radial-gradient(circle closest-side, rgba(11,44,177,0.85), transparent 100%)",
         }}
       />
       {/* Cursor glow */}
