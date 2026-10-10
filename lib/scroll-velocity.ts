@@ -4,7 +4,13 @@
  * Lazily starts one rAF loop for the whole page.
  */
 let velocity = 0
+let externalVelocity: number | null = null
 let started = false
+
+/** Smooth-scroll libraries can feed their own velocity here. */
+export function setExternalVelocity(v: number | null) {
+  externalVelocity = v
+}
 let subscribers = 0
 let raf = 0
 let lastY = 0
@@ -13,10 +19,8 @@ let lastT = 0
 function tick(now: number) {
   const y = window.scrollY
   const dt = Math.max(1, now - lastT)
-  const lenisVel = parseFloat(
-    document.documentElement.style.getPropertyValue("--scroll-velocity")
-  )
-  const raw = Number.isFinite(lenisVel) ? lenisVel : ((y - lastY) / dt) * 16
+  const raw =
+    externalVelocity !== null ? externalVelocity : ((y - lastY) / dt) * 16
   velocity += (raw - velocity) * 0.12
   lastY = y
   lastT = now

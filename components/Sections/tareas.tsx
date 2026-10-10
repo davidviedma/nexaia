@@ -74,7 +74,7 @@ export function Tareas() {
             <Reveal delay={80}>
               <h2 className="flex items-start gap-4 sm:gap-6">
                 <Parallax as="span" speed={-0.12} className="inline-block">
-                  <span className="bg-gradient-to-b from-brand-400 to-cyan bg-clip-text text-[7.5rem] leading-[0.85] font-bold tracking-[-0.06em] text-transparent sm:text-[10rem] lg:text-[12rem]">
+                  <span className="bg-gradient-to-b from-brand-400 to-cyan bg-clip-text py-[0.05em] pr-[0.05em] text-[7.5rem] leading-none font-bold tracking-[-0.06em] text-transparent sm:text-[10rem] lg:text-[12rem]">
                     {tareas.number}
                   </span>
                 </Parallax>

@@ -2,27 +2,32 @@
 
 import { useEffect, useRef, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
-import { ArrowRight02Icon, ArrowDown01Icon } from "@hugeicons/core-free-icons"
+import {
+  ArrowRight02Icon,
+  ArrowDown01Icon,
+  CheckmarkCircle02Icon,
+  Calendar03Icon,
+  Message01Icon,
+} from "@hugeicons/core-free-icons"
 
 import { Button } from "@/components/ui/button"
 import { Magnetic } from "@/components/magnetic"
-import { NodeField } from "@/components/node-field"
-import { hero } from "@/lib/content"
-import { cn } from "@/lib/utils"
+import { NeuralOrb } from "@/components/neural-orb"
 import {
   BlurText,
   GradientText,
   ShinyText,
 } from "@/components/bits/text-effects"
+import { hero } from "@/lib/content"
+import { cn } from "@/lib/utils"
+import { addScrollTask } from "@/lib/scroll-scheduler"
 
 function RotatingWord({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0)
-
   useEffect(() => {
     const id = setInterval(() => setIndex((i) => (i + 1) % words.length), 2400)
     return () => clearInterval(id)
   }, [words.length])
-
   return (
     <span className="relative inline-grid h-[1.2em] overflow-hidden align-bottom">
       {words.map((word, i) => (
@@ -45,106 +50,113 @@ function RotatingWord({ words }: { words: string[] }) {
   )
 }
 
-export function Hero() {
-  const sectionRef = useRef<HTMLElement>(null)
-  const contentRef = useRef<HTMLDivElement>(null)
-  const fieldRef = useRef<HTMLDivElement>(null)
+/* Floating automation chips around the orb */
+const chips = [
+  {
+    icon: CheckmarkCircle02Icon,
+    title: "Cita confirmada",
+    text: "Sin llamadas",
+    className: "top-[10%] left-[0%] [animation-delay:-2s]",
+  },
+  {
+    icon: Calendar03Icon,
+    title: "Recordatorio enviado",
+    text: "Agenda actualizada",
+    className: "top-[42%] right-[-2%] [animation-delay:-6s]",
+  },
+  {
+    icon: Message01Icon,
+    title: "Duda derivada al equipo",
+    text: "Una persona responde",
+    className: "bottom-[8%] left-[6%] [animation-delay:-10s]",
+  },
+]
 
-  // Content drifts up and fades as the hero scrolls away; the node field
-  // moves slower, which gives the layers depth.
+export function Hero() {
+  const contentRef = useRef<HTMLDivElement>(null)
+  const visualRef = useRef<HTMLDivElement>(null)
+
+  // Content drifts up and fades; the orb drifts slower. Runs inside the
+  // shared scroll scheduler and only reads window.scrollY.
   useEffect(() => {
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    let raf = 0
-    const update = () => {
-      raf = 0
-      const y = window.scrollY
-      const vh = window.innerHeight
-      if (y > vh * 1.2) return
-      const p = Math.min(1, y / (vh * 0.9))
-      if (contentRef.current) {
-        contentRef.current.style.transform = `translate3d(0, ${(y * 0.28).toFixed(1)}px, 0)`
-        contentRef.current.style.opacity = String(1 - p * 0.9)
-      }
-      if (fieldRef.current) {
-        fieldRef.current.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`
-      }
-    }
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
-    }
-    window.addEventListener("scroll", onScroll, { passive: true })
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      if (raf) cancelAnimationFrame(raf)
-    }
+    return addScrollTask({
+      read: () => ({ y: window.scrollY, vh: window.innerHeight }),
+      write: ({ y, vh }) => {
+        if (y > vh * 1.2) return
+        const p = Math.min(1, y / (vh * 0.9))
+        if (contentRef.current) {
+          contentRef.current.style.transform = `translate3d(0, ${(y * 0.25).toFixed(1)}px, 0)`
+          contentRef.current.style.opacity = String(1 - p * 0.9)
+        }
+        if (visualRef.current) {
+          visualRef.current.style.transform = `translate3d(0, ${(y * 0.12).toFixed(1)}px, 0)`
+          visualRef.current.style.opacity = String(1 - p * 0.7)
+        }
+      },
+    })
   }, [])
-
-  function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
-    const el = sectionRef.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    el.style.setProperty("--glow-x", `${e.clientX - rect.left}px`)
-    el.style.setProperty("--glow-y", `${e.clientY - rect.top}px`)
-  }
-
-  function handleMouseLeave() {
-    sectionRef.current?.style.setProperty("--glow-x", "-9999px")
-    sectionRef.current?.style.setProperty("--glow-y", "-9999px")
-  }
 
   return (
     <section
-      ref={sectionRef}
       data-theme="dark"
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      className="grain relative isolate flex min-h-svh flex-col overflow-hidden bg-navy [--glow-x:-9999px] [--glow-y:-9999px] [--grain-opacity:0.18]"
+      className="grain relative isolate flex min-h-svh flex-col overflow-hidden bg-navy [--grain-opacity:0.16]"
     >
-      {/* Gradient: deep navy → electric blue → white, like the feed */}
+      {/* Deep gradient + horizon */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 -z-10"
         style={{
           background:
-            "linear-gradient(180deg, #061b3c 0%, #03195b 32%, #0b2cb1 58%, #1951fc 76%, #3781fc 88%, #ffffff 100%)",
+            "linear-gradient(180deg, #050f26 0%, #061b3c 40%, #0b2cb1 78%, #1951fc 92%, #ffffff 100%)",
         }}
       />
-      {/* Soft drifting blobs */}
+      {/* Perspective grid floor */}
       <div
         aria-hidden
-        className="animate-drift pointer-events-none absolute -top-40 right-[-10%] -z-10 h-[46rem] w-[46rem] rounded-full opacity-60"
+        className="pointer-events-none absolute inset-x-0 bottom-0 -z-10 h-[62%] opacity-[0.22]"
+        style={{
+          backgroundImage:
+            "linear-gradient(rgba(165,243,252,0.35) 1px, transparent 1px), linear-gradient(90deg, rgba(165,243,252,0.35) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+          transform: "perspective(600px) rotateX(62deg)",
+          transformOrigin: "50% 100%",
+          maskImage:
+            "linear-gradient(180deg, transparent 0%, black 45%, black 80%, transparent 100%)",
+          WebkitMaskImage:
+            "linear-gradient(180deg, transparent 0%, black 45%, black 80%, transparent 100%)",
+        }}
+      />
+      {/* Soft lights */}
+      <div
+        aria-hidden
+        className="animate-drift pointer-events-none absolute -top-40 right-[-6%] -z-10 h-[46rem] w-[46rem] rounded-full"
         style={{
           background:
-            "radial-gradient(circle closest-side, rgba(55,129,252,0.5), rgba(6,195,214,0.14) 50%, transparent 100%)",
+            "radial-gradient(circle closest-side, rgba(25,81,252,0.55), rgba(6,195,214,0.12) 55%, transparent 100%)",
         }}
       />
       <div
         aria-hidden
-        className="animate-drift pointer-events-none absolute top-1/3 left-[-20%] -z-10 h-[34rem] w-[34rem] rounded-full opacity-50 [animation-delay:-6s]"
+        className="animate-drift pointer-events-none absolute top-1/3 left-[-18%] -z-10 h-[34rem] w-[34rem] rounded-full [animation-delay:-6s]"
         style={{
           background:
-            "radial-gradient(circle closest-side, rgba(11,44,177,0.85), transparent 100%)",
+            "radial-gradient(circle closest-side, rgba(11,44,177,0.8), transparent 100%)",
         }}
       />
-      {/* Cursor glow */}
+      {/* Scanline sweep */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-60"
+        className="animate-scan pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 opacity-60"
         style={{
           background:
-            "radial-gradient(120px circle at var(--glow-x) var(--glow-y), rgba(6,195,214,0.10), transparent 70%)",
+            "linear-gradient(180deg, transparent, rgba(6,195,214,0.10) 50%, transparent)",
         }}
       />
 
-      <div
-        ref={fieldRef}
-        className="absolute inset-0 -z-10 will-change-transform"
-      >
-        <NodeField className="opacity-90" density={1.25} />
-      </div>
-
-      <div className="relative z-10 container mx-auto flex flex-1 flex-col justify-center px-6 pt-32 pb-20 sm:px-10 lg:px-16 lg:pt-36">
-        <div ref={contentRef} className="max-w-5xl will-change-transform">
+      <div className="relative z-10 container mx-auto grid flex-1 grid-cols-1 items-center gap-10 px-6 pt-32 pb-16 sm:px-10 lg:grid-cols-12 lg:px-16 lg:pt-28">
+        {/* Copy */}
+        <div ref={contentRef} className="will-change-transform lg:col-span-7">
           <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase [animation-delay:120ms]">
             <span className="animate-pulse-dot size-1.5 rounded-full bg-cyan" />
             <ShinyText color="rgba(6,195,214,0.75)" shine="#ffffff" speed={3.5}>
@@ -152,11 +164,11 @@ export function Hero() {
             </ShinyText>
           </p>
 
-          <h1 className="text-[2.9rem] leading-[0.98] font-bold tracking-[-0.035em] text-white sm:text-6xl md:text-7xl lg:text-[6.2rem]">
+          <h1 className="text-[2.9rem] leading-[0.98] font-bold tracking-[-0.035em] text-white sm:text-6xl md:text-7xl lg:text-[4.9rem] xl:text-[5.8rem]">
             {hero.title.map((line, i) =>
               i === hero.title.length - 1 ? (
                 <span key={line} className="block">
-                  <GradientText className="animate-blur-in inline-block">
+                  <GradientText className="animate-blur-in inline-block py-[0.06em] leading-none">
                     <span style={{ animationDelay: `${180 + i * 160}ms` }}>
                       {line}
                     </span>
@@ -203,6 +215,32 @@ export function Hero() {
               </Button>
             </Magnetic>
           </div>
+        </div>
+
+        {/* Visual: AI core + floating chips */}
+        <div
+          ref={visualRef}
+          className="animate-fade-up relative mx-auto aspect-square w-full max-w-[30rem] will-change-transform [animation-delay:400ms] lg:col-span-5 lg:max-w-none"
+        >
+          <NeuralOrb className="absolute inset-0" />
+          {chips.map((c) => (
+            <div
+              key={c.title}
+              className={cn(
+                "animate-float absolute flex items-center gap-3 rounded-2xl border border-white/15 bg-navy/75 py-2.5 pr-4 pl-2.5 text-white shadow-[0_20px_50px_-20px_rgba(3,25,91,0.8)]",
+                c.className
+              )}
+            >
+              <span className="flex size-9 items-center justify-center rounded-xl bg-cyan/15 text-cyan">
+                <HugeiconsIcon icon={c.icon} size={18} />
+              </span>
+              <span className="flex flex-col leading-tight">
+                <span className="text-sm font-bold">{c.title}</span>
+                <span className="text-[11px] text-white/60">{c.text}</span>
+              </span>
+              <span className="animate-pulse-dot ml-1 size-1.5 rounded-full bg-cyan" />
+            </div>
+          ))}
         </div>
       </div>
 

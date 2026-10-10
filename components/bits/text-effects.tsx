@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState, type CSSProperties } from "react"
 import { cn } from "@/lib/utils"
 import { useInView } from "@/hooks/use-in-view"
+import { addScrollTask } from "@/lib/scroll-scheduler"
 
 /* ── Blur Text ──────────────────────────────────────────────── */
 
@@ -194,30 +195,23 @@ export function ScrollRevealText({
       })
       return
     }
-    let raf = 0
-    const update = () => {
-      raf = 0
-      const rect = el.getBoundingClientRect()
-      const vh = window.innerHeight
-      const p = Math.max(0, Math.min(1, (vh * 0.9 - rect.top) / (vh * 0.55)))
-      const n = spans.length
-      spans.forEach((s, i) => {
-        const local = Math.max(0, Math.min(1, p * (n + 4) - i))
-        s.style.opacity = String(0.18 + local * 0.82)
-        s.style.filter = `blur(${((1 - local) * 4).toFixed(2)}px)`
-      })
-    }
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", onScroll)
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", onScroll)
-      if (raf) cancelAnimationFrame(raf)
-    }
+    const n = spans.length
+    return addScrollTask({
+      read: () => {
+        const rect = el.getBoundingClientRect()
+        const vh = window.innerHeight
+        if (rect.bottom < 0 || rect.top > vh) return null
+        return Math.max(0, Math.min(1, (vh * 0.9 - rect.top) / (vh * 0.55)))
+      },
+      write: (p) => {
+        if (p === null) return
+        spans.forEach((s, i) => {
+          const local = Math.max(0, Math.min(1, p * (n + 4) - i))
+          s.style.opacity = String(0.18 + local * 0.82)
+          s.style.filter = `blur(${((1 - local) * 4).toFixed(2)}px)`
+        })
+      },
+    })
   }, [text])
 
   return (

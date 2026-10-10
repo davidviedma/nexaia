@@ -3,6 +3,7 @@
 import { useEffect } from "react"
 import Lenis from "lenis"
 import "lenis/dist/lenis.css"
+import { setExternalVelocity } from "@/lib/scroll-velocity"
 
 declare global {
   interface Window {
@@ -35,16 +36,14 @@ export function SmoothScroll() {
 
     // Expose velocity for scroll-reactive components (ticker skew, etc.)
     const onScroll = ({ velocity }: { velocity: number }) => {
-      document.documentElement.style.setProperty(
-        "--scroll-velocity",
-        velocity.toFixed(2)
-      )
+      setExternalVelocity(velocity)
     }
     lenis.on("scroll", onScroll)
 
     return () => {
       cancelAnimationFrame(raf)
       lenis.off("scroll", onScroll)
+      setExternalVelocity(null)
       lenis.destroy()
       delete window.__lenis
     }

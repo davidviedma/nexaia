@@ -9,6 +9,7 @@ import { Menu01Icon, Cancel01Icon } from "@hugeicons/core-free-icons"
 import { cn } from "@/lib/utils"
 import { nav } from "@/lib/content"
 import { Logo } from "@/components/logo"
+import { addScrollTask } from "@/lib/scroll-scheduler"
 
 /**
  * Floating "island" navigation: starts collapsed as a pill with the logo,
@@ -47,26 +48,30 @@ export function Nav() {
 
   useEffect(() => {
     const ids = nav.links.map((l) => l.href.split("#")[1])
-
-    const onScroll = () => {
-      const threshold = window.innerHeight * 0.3
-      let current = ""
-      for (const id of ids) {
-        const el = document.getElementById(id)
-        if (el && el.getBoundingClientRect().top <= threshold) current = id
-      }
-      setActiveSection(current)
-
-      // Detect whether the island sits on a dark section.
-      const probe = document.elementFromPoint(window.innerWidth / 2, 80)
-      const themed = probe?.closest<HTMLElement>("[data-theme]")
-      const darkHost = themed?.dataset.theme === "dark" ? themed : null
-      setOnDark(Boolean(darkHost))
-    }
-
-    window.addEventListener("scroll", onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener("scroll", onScroll)
+    const probeY = 80
+    return addScrollTask({
+      read: () => {
+        const threshold = window.innerHeight * 0.3
+        let current = ""
+        for (const id of ids) {
+          const el = document.getElementById(id)
+          if (el && el.getBoundingClientRect().top <= threshold) current = id
+        }
+        // Innermost themed block under the island decides light/dark.
+        let dark = false
+        document.querySelectorAll<HTMLElement>("[data-theme]").forEach((el) => {
+          const r = el.getBoundingClientRect()
+          if (r.top <= probeY && r.bottom >= probeY && r.width > 0) {
+            dark = el.dataset.theme === "dark"
+          }
+        })
+        return { current, dark }
+      },
+      write: ({ current, dark }) => {
+        setActiveSection((prev) => (prev === current ? prev : current))
+        setOnDark((prev) => (prev === dark ? prev : dark))
+      },
+    })
   }, [])
 
   useEffect(() => {

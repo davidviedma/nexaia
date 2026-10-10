@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, type ElementType, type ReactNode } from "react"
 import { cn } from "@/lib/utils"
+import { addScrollTask, requestScrollFlush } from "@/lib/scroll-scheduler"
 
 /**
  * Moves its children vertically at a fraction of the scroll speed.
@@ -26,38 +27,29 @@ export function Parallax({
     if (!el) return
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
 
-    let raf = 0
     let visible = false
-
-    const update = () => {
-      raf = 0
-      if (!visible) return
-      const rect = el.getBoundingClientRect()
-      const vh = window.innerHeight
-      const centre = rect.top + rect.height / 2 - vh / 2
-      el.style.transform = `translate3d(0, ${(-centre * speed).toFixed(1)}px, 0)`
-    }
-    const schedule = () => {
-      if (!raf) raf = requestAnimationFrame(update)
-    }
-
     const io = new IntersectionObserver(
       ([entry]) => {
         visible = entry.isIntersecting
-        schedule()
+        requestScrollFlush()
       },
       { rootMargin: "30% 0px 30% 0px" }
     )
     io.observe(el)
-    window.addEventListener("scroll", schedule, { passive: true })
-    window.addEventListener("resize", schedule)
-    schedule()
-
+    const remove = addScrollTask({
+      read: () => {
+        if (!visible) return null
+        const rect = el.getBoundingClientRect()
+        return rect.top + rect.height / 2 - window.innerHeight / 2
+      },
+      write: (centre) => {
+        if (centre === null) return
+        el.style.transform = `translate3d(0, ${(-centre * speed).toFixed(1)}px, 0)`
+      },
+    })
     return () => {
       io.disconnect()
-      window.removeEventListener("scroll", schedule)
-      window.removeEventListener("resize", schedule)
-      if (raf) cancelAnimationFrame(raf)
+      remove()
     }
   }, [speed])
 

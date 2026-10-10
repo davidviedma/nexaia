@@ -13,6 +13,7 @@ import { proceso } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { Kicker } from "@/components/section-heading"
 import { RevealLines } from "@/components/reveal"
+import { addScrollTask } from "@/lib/scroll-scheduler"
 
 /**
  * "How it works" inside a scroll-expand panel: the white panel starts as an
@@ -42,56 +43,52 @@ export function Proceso() {
     const panel = panelRef.current
     if (!wrap || !panel) return
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches
-    let raf = 0
     let last = -1
 
-    const update = () => {
-      raf = 0
-      const rect = wrap.getBoundingClientRect()
-      const vh = window.innerHeight
-      const pinned = window.innerWidth >= 1024 && !reduce
-
-      let steps: number
-      if (pinned) {
-        const total = Math.max(1, rect.height - vh)
-        const p = clamp01(-rect.top / total)
-        const expand =
-          p < GROW_END
-            ? easeInOut(p / GROW_END)
-            : p > SHRINK_START
-              ? 1 - easeInOut((p - SHRINK_START) / (1 - SHRINK_START))
-              : 1
-        const scale = 0.84 + 0.16 * expand
-        const radius = 48 * (1 - expand)
-        panel.style.transform = `scale(${scale.toFixed(4)})`
-        panel.style.borderRadius = `${radius.toFixed(1)}px`
-        panel.style.boxShadow = `0 ${40 * (1 - expand)}px ${120 * (1 - expand)}px -30px rgba(3,25,91,${0.6 * (1 - expand)})`
-        steps = clamp01((p - STEPS_START) / (STEPS_END - STEPS_START))
-      } else {
-        // Mobile / reduced motion: plain section, steps scrub with position.
-        panel.style.transform = ""
-        panel.style.borderRadius = ""
-        panel.style.boxShadow = ""
-        steps = reduce
-          ? 1
-          : clamp01((vh * 0.85 - rect.top) / Math.max(1, rect.height * 0.8))
-      }
-      if (Math.abs(steps - last) > 0.002) {
-        last = steps
-        setProgress(steps)
-      }
-    }
-    const onScroll = () => {
-      if (!raf) raf = requestAnimationFrame(update)
-    }
-    update()
-    window.addEventListener("scroll", onScroll, { passive: true })
-    window.addEventListener("resize", onScroll)
-    return () => {
-      window.removeEventListener("scroll", onScroll)
-      window.removeEventListener("resize", onScroll)
-      if (raf) cancelAnimationFrame(raf)
-    }
+    return addScrollTask({
+      read: () => {
+        const rect = wrap.getBoundingClientRect()
+        const vh = window.innerHeight
+        if (rect.bottom < -vh || rect.top > vh * 2) return null
+        return {
+          top: rect.top,
+          height: rect.height,
+          vh,
+          pinned: window.innerWidth >= 1024 && !reduce,
+        }
+      },
+      write: (m) => {
+        if (!m) return
+        let steps: number
+        if (m.pinned) {
+          const total = Math.max(1, m.height - m.vh)
+          const p = clamp01(-m.top / total)
+          const expand =
+            p < GROW_END
+              ? easeInOut(p / GROW_END)
+              : p > SHRINK_START
+                ? 1 - easeInOut((p - SHRINK_START) / (1 - SHRINK_START))
+                : 1
+          const scale = 0.84 + 0.16 * expand
+          const radius = 48 * (1 - expand)
+          panel.style.transform = `scale(${scale.toFixed(4)})`
+          panel.style.borderRadius = `${radius.toFixed(1)}px`
+          panel.style.boxShadow = `0 ${40 * (1 - expand)}px ${120 * (1 - expand)}px -30px rgba(3,25,91,${0.6 * (1 - expand)})`
+          steps = clamp01((p - STEPS_START) / (STEPS_END - STEPS_START))
+        } else {
+          panel.style.transform = ""
+          panel.style.borderRadius = ""
+          panel.style.boxShadow = ""
+          steps = reduce
+            ? 1
+            : clamp01((m.vh * 0.85 - m.top) / Math.max(1, m.height * 0.8))
+        }
+        if (Math.abs(steps - last) > 0.002) {
+          last = steps
+          setProgress(steps)
+        }
+      },
+    })
   }, [])
 
   const steps = proceso.steps
