@@ -2,8 +2,6 @@
 
 import { useEffect, useRef, useState, useSyncExternalStore } from "react"
 
-const INTERACTIVE =
-  "a, button, [role='button'], summary, input[type='range'], [data-cursor]"
 const TEXT_INPUTS = "input:not([type='range']), textarea, select"
 const POINTER_QUERY = "(pointer: fine)"
 const REDUCE_QUERY = "(prefers-reduced-motion: reduce)"
@@ -25,7 +23,7 @@ const pointerSnapshot = () =>
 /**
  * Custom cursor for pointer devices: a small dot that follows the pointer
  * instantly and a ring that eases behind it. Over interactive elements the
- * ring grows; `data-cursor="Texto"` shows a label inside it.
+ * ring eases behind it. Same look at all times; hidden over text inputs.
  */
 export function Cursor() {
   const dotRef = useRef<HTMLDivElement>(null)
@@ -35,8 +33,7 @@ export function Cursor() {
     pointerSnapshot,
     () => false
   )
-  const [label, setLabel] = useState<string | null>(null)
-  const [state, setState] = useState<"idle" | "hover" | "hidden">("idle")
+  const [state, setState] = useState<"idle" | "hidden">("idle")
 
   useEffect(() => {
     if (!enabled) return
@@ -70,26 +67,11 @@ export function Cursor() {
       }
     }
 
+    // Only hide over text inputs (so the caret stays visible); otherwise
+    // the dot + ring are always shown, unchanged.
     const onOver = (e: PointerEvent) => {
       const el = e.target as HTMLElement | null
-      if (!el) return
-      if (el.closest(TEXT_INPUTS)) {
-        setState("hidden")
-        setLabel(null)
-        return
-      }
-      const hit = el.closest<HTMLElement>(INTERACTIVE)
-      if (hit) {
-        setState("hover")
-        setLabel(
-          hit.dataset.cursor ??
-            hit.closest<HTMLElement>("[data-cursor]")?.dataset.cursor ??
-            null
-        )
-      } else {
-        setState("idle")
-        setLabel(null)
-      }
+      setState(el?.closest(TEXT_INPUTS) ? "hidden" : "idle")
     }
 
     const onLeave = () =>
@@ -128,10 +110,7 @@ export function Cursor() {
         aria-hidden
         className="nexa-cursor-ring"
         data-state={state}
-        data-label={label ? "true" : "false"}
-      >
-        {label && <span>{label}</span>}
-      </div>
+      />
     </>
   )
 }

@@ -103,7 +103,6 @@ export function Tareas() {
                         onClick={() => setActive(i)}
                         onMouseEnter={() => setActive(i)}
                         aria-pressed={isActive}
-                        data-cursor="Ver"
                         className={cn(
                           "group flex w-full items-center gap-4 border-t border-white/10 py-4 text-left transition-colors duration-300",
                           i === tareas.items.length - 1 && "border-b"

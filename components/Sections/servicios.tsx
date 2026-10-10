@@ -126,7 +126,6 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
         href="#contacto"
         className="block h-full"
         aria-label={`${item.title}: ${item.text} Solicitar diagnóstico`}
-        data-cursor="Ver"
       >
         <BentoCard className="group flex h-full flex-col gap-6 rounded-3xl border border-line bg-surface p-6 hover:border-brand-100 sm:p-7">
           <div className="relative">
