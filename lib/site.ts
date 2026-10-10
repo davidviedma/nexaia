@@ -27,6 +27,7 @@ export const diagnosticoMailto = (fields?: {
   nombre?: string
   negocio?: string
   tarea?: string
+  proceso?: string
 }) => {
   const subject = "Solicitud de Diagnóstico Nexa"
   const body = [
@@ -36,6 +37,9 @@ export const diagnosticoMailto = (fields?: {
     "",
     "La tarea que más tiempo me quita es:",
     fields?.tarea || "...",
+    "",
+    "Ahora lo gestiono así:",
+    fields?.proceso || "...",
     "",
     "Me gustaría solicitar el Diagnóstico Nexa.",
   ].join("\n")

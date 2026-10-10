@@ -1,5 +1,5 @@
 /**
- * Copy del sitio. Extraído del documento "Nexa — Vista completa".
+ * Copy del sitio. Extraído de los documentos "Nexa — Vista completa" y "Nexa AI V2".
  */
 
 export const nav = {
@@ -15,12 +15,14 @@ export const nav = {
 }
 
 export const hero = {
-  kicker: "Hola, somos Nexa IA",
-  title: ["Tu negocio,", "con más tiempo", "para crecer."],
-  subtitle: "Digitalización e IA para pymes.",
+  kicker: "Digitalización con propósito",
+  title: ["Tu negocio,", "un paso", "por delante."],
+  subtitle:
+    "Digitalización e IA para ganar tiempo, ordenar tu negocio y atender mejor.",
   words: ["Tiempo.", "Clientes.", "Tranquilidad."],
   primary: "Solicitar Diagnóstico Nexa",
   secondary: "Conoce Nexa IA",
+  tag: "Consultoría · IA · Pymes",
 }
 
 export const ticker = [
@@ -37,55 +39,80 @@ export const ticker = [
 export const mision = {
   kicker: "Nuestra misión",
   title: "La tecnología también es para tu pyme.",
-  text: "Acercamos herramientas digitales e IA a tu negocio con una forma de trabajar sencilla, cercana y práctica.",
+  text: "Acercamos herramientas digitales e IA a tu negocio con una forma de trabajar sencilla, cercana y práctica. La tecnología se adapta a tu operativa, no al revés.",
   pillars: [
     { title: "Sencilla", text: "Te explicamos cada paso." },
     { title: "Cercana", text: "Entendemos tu día a día." },
     { title: "Útil", text: "Priorizamos lo que aporta valor." },
   ],
+  stat: {
+    value: 21.1,
+    suffix: "%",
+    label: "de las empresas españolas de 10 o más empleados ya usaban IA",
+    detail: "en el primer trimestre de 2025.",
+    note: "Tu punto de partida es una necesidad concreta.",
+    source: "Fuente: INE, ETICCE 2024–1T 2025 (publicado el 22/10/2025).",
+  },
 }
 
 export type Servicio = {
-  id: "web" | "crm" | "automatizacion" | "redes"
+  id: "web" | "crm" | "automatizacion" | "ia"
   title: string
   text: string
   detail: string
 }
 
 export const servicios = {
-  kicker: "Lo que podemos hacer",
+  kicker: "Cada pieza, con una función",
   title: "Herramientas para tu día a día.",
-  note: "La solución se elige después de entender el problema.",
+  note: "La tecnología se adapta a tu operativa. La solución se elige después de entender el problema.",
   items: [
     {
       id: "web",
-      title: "Web",
-      text: "Facilita que te encuentren y te contacten.",
-      detail:
-        "Una web clara, rápida y pensada para que un cliente te escriba o te llame sin dar vueltas.",
+      title: "Web y redes",
+      text: "Captar clientes y comunicar mejor.",
+      detail: "Que te encuentren y entiendan por qué elegirte.",
     },
     {
       id: "crm",
       title: "CRM",
-      text: "Ordena tus clientes y seguimientos.",
-      detail:
-        "Clientes, estado de cada propuesta y próxima acción en un mismo sitio. Nadie se queda sin respuesta.",
+      text: "Hacer seguimiento.",
+      detail: "Que cada cliente y cada presupuesto tengan un próximo paso.",
     },
     {
       id: "automatizacion",
       title: "Automatización",
-      text: "Reduce tareas repetitivas.",
-      detail:
-        "Conectamos las herramientas que ya usas para que los pasos manuales desaparezcan y tú solo revises las excepciones.",
+      text: "Agilizar tareas.",
+      detail: "Que las tareas repetitivas requieran menos trabajo manual.",
     },
     {
-      id: "redes",
-      title: "Redes sociales",
-      text: "Comunica lo que haces y lo que ofreces.",
+      id: "ia",
+      title: "IA aplicada",
+      text: "Atender con más agilidad.",
       detail:
-        "Contenido con criterio y un sistema sencillo para publicar con constancia sin que te coma el día.",
+        "Que las consultas y la información se gestionen con más agilidad.",
     },
   ] satisfies Servicio[],
+  compare: {
+    kicker: "Elegir bien la solución",
+    title: "Cada tarea pide una solución distinta.",
+    text: "La IA aporta valor cuando la tarea lo necesita.",
+    items: [
+      {
+        title: "Automatización",
+        from: "Una cita",
+        to: "Un recordatorio",
+        text: "Para acciones con reglas definidas.",
+      },
+      {
+        title: "IA aplicada",
+        from: "Un mensaje libre",
+        to: "Entender la consulta",
+        text: "Para interpretar o preparar contenido.",
+      },
+    ],
+    footer: "Las situaciones que necesitan criterio pasan al equipo.",
+  },
 }
 
 export const tareas = {
@@ -93,6 +120,17 @@ export const tareas = {
   number: "5",
   title: "tareas que se comen tu día.",
   subtitle: "Y cómo podrías simplificarlas.",
+  hook: {
+    lead: "Solo son 20 minutos al día.",
+    punch: "Hasta que miras el mes.",
+    value: "7 h 20 min",
+    detail: "en una misma tarea, cada mes · 20 min × 22 días laborables",
+  },
+  traits: [
+    "Se repiten mucho",
+    "Tienen pasos claros",
+    "Consumen tiempo medible",
+  ],
   footer:
     "Elige una tarea que repitas mucho y apunta dos datos: cuántas veces la haces y cuánto tardas cada vez.",
   items: [
@@ -141,36 +179,33 @@ export const tareas = {
 export const proceso = {
   kicker: "Así trabajamos",
   title: "Primero entendemos tu negocio.",
-  text: "Cuatro pasos, sin tecnicismos y sin parar tu actividad.",
+  text: "Revisamos cómo trabajas y elegimos contigo qué conviene mejorar primero. Sin tecnicismos y sin parar tu actividad.",
   steps: [
     {
       title: "Diagnóstico",
-      text: "Analizamos cómo trabajas.",
+      text: "Dónde se pierde tiempo.",
       points: [
-        "Nos cuentas un día normal",
-        "Detectamos dónde se pierde tiempo",
+        "Cómo llegan tus clientes y cómo los atiendes",
+        "Qué ocurre entre una tarea y la siguiente",
       ],
     },
     {
       title: "Propuesta",
-      text: "Priorizamos las mejoras.",
-      points: ["Qué hacer primero", "Impacto estimado en horas y euros"],
+      text: "Qué impacto puede tener la mejora.",
+      points: [
+        "Cruzamos impacto, esfuerzo y facilidad de adopción",
+        "Horas y euros estimados, con supuestos",
+      ],
     },
     {
       title: "Implementación",
-      text: "Las ponemos en marcha.",
-      points: [
-        "Conectamos las herramientas que ya usas",
-        "Te explicamos cada paso",
-      ],
+      text: "Configuramos y conectamos la solución.",
+      points: ["Probamos el proceso contigo", "Sin parar tu actividad"],
     },
     {
       title: "Acompañamiento",
-      text: "Seguimos a tu lado.",
-      points: [
-        "Revisamos las excepciones contigo",
-        "Ajustamos lo que haga falta",
-      ],
+      text: "Mantenemos y mejoramos su funcionamiento.",
+      points: ["Mantenimiento y mejora continua", "Revisamos lo que medimos"],
     },
   ],
 }
@@ -233,19 +268,19 @@ export const testimonios = {
 
 export const diagnostico = {
   kicker: "Diagnóstico Nexa",
-  title: "Antes de invertir, descubre por dónde empezar.",
-  text: "Un plan claro para decidir qué merece la pena mejorar.",
+  title: "Antes de invertir, ten un plan.",
+  text: "Detectamos oportunidades y priorizamos qué merece la pena mejorar primero.",
   phases: [
     {
       n: "01",
       title: "Entender",
-      lead: "Entendemos cómo trabajas.",
-      text: "Nos cuentas qué pasa en un día normal.",
+      lead: "Miramos el negocio desde dentro.",
+      text: "Cómo llegan tus clientes, cómo los atiendes y qué ocurre entre una tarea y la siguiente.",
       items: [
         "Captación y atención",
         "Citas y reservas",
         "Administración y datos",
-        "Tareas repetitivas",
+        "Repeticiones",
       ],
     },
     {
@@ -263,45 +298,62 @@ export const diagnostico = {
     {
       n: "03",
       title: "Priorizar",
-      lead: "Priorizamos las mejoras.",
-      text: "Ordenamos las oportunidades para ayudarte a decidir.",
+      lead: "No todas las mejoras van primero.",
+      text: "Cruzamos impacto, esfuerzo y facilidad de adopción.",
       items: [
-        "Qué hacer primero",
-        "Qué esfuerzo requiere",
-        "Impacto estimado en horas y euros",
-        "Supuestos de cada estimación",
+        "Primero: alto impacto, esfuerzo contenido",
+        "Planificar: alto impacto, más esfuerzo",
+        "Después: impacto limitado, esfuerzo contenido",
+        "Replantear: impacto limitado, más esfuerzo",
+      ],
+    },
+    {
+      n: "04",
+      title: "Decidir",
+      lead: "Saber qué hacer. Y saber por qué.",
+      text: "Una estimación explicada para tomar una decisión informada.",
+      items: [
+        "Qué problema resolvemos y por qué empezar ahí",
+        "Horas y euros estimados, con supuestos",
+        "Qué implica ponerla en marcha",
+        "Qué revisaremos después",
       ],
     },
   ],
   deliverables: {
-    kicker: "Lo que te llevas",
-    title: "Un plan claro. Una decisión con criterio.",
+    kicker: "Tu plan de mejora",
+    title: "Saber qué hacer. Y saber por qué.",
     items: [
-      "Oportunidades detectadas",
-      "Prioridades de actuación",
-      "Impacto estimado",
-      "Próximos pasos",
+      { title: "Oportunidad", text: "Qué problema queremos resolver." },
+      { title: "Prioridad", text: "Por qué empezar por esa mejora." },
+      { title: "Impacto", text: "Horas y euros estimados, con supuestos." },
+      { title: "Inversión", text: "Qué implica ponerla en marcha." },
+      { title: "Medición", text: "Qué revisaremos después." },
     ],
-    footer: "Si avanzamos, implementamos las mejoras y te acompañamos después.",
+    footer:
+      "Y después lo ponemos en marcha: configuramos y conectamos la solución, probamos el proceso contigo y mantenemos su funcionamiento.",
   },
 }
 
 export const resultados = {
   kicker: "Lo que recuperas",
   title: ["Menos tareas a mano.", "Más horas para tu negocio."],
-  text: "Tomamos una sola tarea, confirmar citas en una peluquería, y la conectamos a la agenda. Esto es lo que cambia.",
+  text: "Simulación con una sola tarea: confirmar citas en una peluquería, conectada a la agenda. Un cálculo explicado, no un resultado de cliente.",
   hero: {
     value: 70,
     suffix: "%",
     prefix: "−",
-    label: "menos tiempo confirmando citas",
-    detail: "De 10 h a 3 h al mes. El equipo solo revisa excepciones.",
+    label: "de tiempo manual en este escenario",
+    detail:
+      "De 10 h a 3 h al mes. Un flujo con reglas: las dudas y los cambios pasan al equipo.",
   },
   before: { label: "Antes · todo a mano", hours: 10 },
   after: { label: "Después · revisión y supervisión", hours: 3 },
   hourRate: 20,
   tasks: 5,
-  uses: ["Atender mejor.", "Preparar el día.", "Hacer seguimiento."],
+  uses: ["Volumen real.", "Trabajo restante.", "Coste completo."],
+  usesLead:
+    "Primero calculamos, después decidimos. El resultado de tu negocio depende de",
   flow: [
     "Cita registrada",
     "Recordatorio enviado",
@@ -309,22 +361,56 @@ export const resultados = {
     "Agenda actualizada",
   ],
   footnote:
-    "Escenario ilustrativo: 200 confirmaciones al mes × 3 minutos, valorando la hora a 20 €. No es un resultado real ni un ahorro garantizado: hay que considerar herramientas, implantación y mantenimiento. Un recordatorio puede funcionar con reglas, sin IA, y las dudas pasan siempre a una persona.",
+    "Simulación · Peluquería · No es un caso real. 200 confirmaciones al mes × 3 minutos; después, 200 revisiones de 30 segundos más 80 minutos de excepciones y supervisión. Valor teórico de capacidad a 20 €/h: no es ahorro neto ni beneficio garantizado. Para decidir hay que considerar inversión, herramientas, mantenimiento y uso del tiempo.",
 }
 
 export const nosotros = {
-  kicker: "Por qué nacemos",
-  title: "Dos emprendedores. Una idea muy clara.",
-  quote: "Que la tecnología también trabaje para tu pyme.",
-  text: "Creamos Nexa IA para acercarte herramientas que te ayuden en el día a día.",
-  values: ["Escucharte.", "Entenderte.", "Acompañarte."],
-  question: "¿Qué tarea te gustaría dejar de hacer a mano?",
+  kicker: "Dos fundadores. Un mismo propósito.",
+  title: "Tecnología avanzada. Trato cercano.",
+  quote: "Tú conoces tu negocio. Nosotros lo conectamos con lo que necesita.",
+  text: "Creamos Nexa IA para acercar a tu pyme herramientas que le hagan el día más fácil. Una relación cercana, de principio a fin.",
+  values: ["Escucharte.", "Implementar.", "Acompañarte."],
+  question: "¿Qué parte de tu día te gustaría simplificar?",
+  split: {
+    title: "Tú marcas el objetivo. Nosotros lo llevamos a la práctica.",
+    yours: {
+      title: "Tu parte",
+      items: [
+        "Contarnos cómo trabajas.",
+        "Elegir qué quieres mejorar.",
+        "Decidir con información.",
+      ],
+    },
+    ours: {
+      title: "Nuestra parte",
+      items: [
+        "Analizar las oportunidades.",
+        "Implementar la solución.",
+        "Acompañar su evolución.",
+      ],
+    },
+    footer: "Trabajamos contigo en cada decisión importante.",
+  },
+  expect: [
+    {
+      title: "Claridad",
+      text: "Qué cambia, para qué y cómo medirlo.",
+    },
+    {
+      title: "Compromiso",
+      text: "Nos ocupamos de ponerlo en marcha.",
+    },
+    {
+      title: "Continuidad",
+      text: "Mantenimiento y mejora continua.",
+    },
+  ],
 }
 
 export const faqs = [
   {
     q: "¿Necesito inteligencia artificial para todo?",
-    a: "No. Muchas mejoras funcionan con reglas sencillas, sin IA. Por ejemplo, un recordatorio de cita conectado a la agenda. La IA entra solo cuando aporta valor real.",
+    a: "No. Cada tarea pide una solución distinta. Una cita se resuelve con un recordatorio y reglas definidas, sin IA. La IA aplicada entra cuando hay que interpretar un mensaje libre o preparar contenido. Y lo que necesita criterio pasa siempre al equipo.",
   },
   {
     q: "¿Qué es exactamente el Diagnóstico Nexa?",
@@ -341,10 +427,16 @@ export const faqs = [
 ]
 
 export const cta = {
-  kicker: "Tu siguiente paso",
-  title: "Cuéntanos qué te está quitando tiempo.",
-  text: "Solicita el Diagnóstico Nexa. Revisamos tu negocio y priorizamos las mejoras.",
-  questions: ["¿A qué te dedicas?", "¿Qué tarea te quita más tiempo?"],
+  kicker: "El primer paso es una conversación",
+  title: ["Tu próxima mejora", "empieza aquí."],
+  text: "Cuéntanos qué te está quitando tiempo. Lo revisamos contigo.",
+  questions: [
+    "¿A qué se dedica tu negocio?",
+    "¿Qué te está quitando más tiempo?",
+    "¿Cómo lo estás gestionando ahora?",
+  ],
+  example: "Tengo una clínica y confirmamos las citas a mano.",
   button: "Solicitar Diagnóstico Nexa",
-  footer: "Te explicamos alcance y condiciones antes de concertarlo.",
+  footer:
+    "Te explicamos el siguiente paso, el alcance y las condiciones antes de concertarlo.",
 }

@@ -216,16 +216,6 @@ export function Hero() {
         activeColor="#06c3d6"
         proximity={150}
       />
-      {/* Scanline sweep */}
-      <div
-        aria-hidden
-        className="animate-scan pointer-events-none absolute inset-x-0 top-0 -z-10 h-40 opacity-60"
-        style={{
-          background:
-            "linear-gradient(180deg, transparent, rgba(6,195,214,0.10) 50%, transparent)",
-        }}
-      />
-
       <div className="relative z-10 container mx-auto grid flex-1 grid-cols-1 items-center gap-10 px-6 pt-32 pb-16 sm:px-10 lg:grid-cols-12 lg:px-16 lg:pt-28">
         {/* Copy */}
         <div ref={contentRef} className="will-change-transform lg:col-span-6">
@@ -383,7 +373,7 @@ export function Hero() {
           />
         </a>
         <p className="animate-fade-up hidden text-[11px] font-bold tracking-[0.22em] text-ink/60 uppercase [animation-delay:1000ms] sm:block">
-          IA para pymes
+          {hero.tag}
         </p>
       </div>
     </section>

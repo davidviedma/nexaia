@@ -89,6 +89,27 @@ export function Tareas() {
               </p>
             </Reveal>
 
+            <Reveal delay={220}>
+              <div className="flex flex-col gap-3 rounded-2xl border border-white/10 bg-white/[0.05] p-5 sm:flex-row sm:items-center sm:justify-between">
+                <div className="flex flex-col">
+                  <span className="text-lg font-bold tracking-tight">
+                    {tareas.hook.lead}
+                  </span>
+                  <span className="text-sm text-white/60">
+                    {tareas.hook.punch}
+                  </span>
+                </div>
+                <div className="flex flex-col sm:items-end">
+                  <span className="text-3xl font-bold tracking-tight text-cyan">
+                    {tareas.hook.value}
+                  </span>
+                  <span className="text-xs text-white/55">
+                    {tareas.hook.detail}
+                  </span>
+                </div>
+              </div>
+            </Reveal>
+
             <Reveal delay={260}>
               <ul
                 className="flex flex-col"
@@ -218,8 +239,18 @@ export function Tareas() {
                 Empieza por una
               </p>
               <p className="max-w-2xl text-2xl font-bold tracking-tight text-balance sm:text-3xl">
-                Elige una tarea que repitas mucho.
+                Una tarea. Dos datos. Un buen comienzo.
               </p>
+              <ul className="mt-2 flex flex-wrap gap-2">
+                {tareas.traits.map((t) => (
+                  <li
+                    key={t}
+                    className="rounded-full border border-white/15 px-3 py-1.5 text-xs font-semibold text-white/80"
+                  >
+                    {t}
+                  </li>
+                ))}
+              </ul>
             </div>
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               {[

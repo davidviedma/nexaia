@@ -51,7 +51,7 @@ export function Diagnostico() {
       <div className="relative z-[2] container mx-auto px-6 sm:px-10 lg:px-16">
         <SectionHeading
           kicker={diagnostico.kicker}
-          lines={["Antes de invertir,", "descubre por", "dónde empezar."]}
+          lines={["Antes de invertir,", "ten un plan."]}
           text={diagnostico.text}
           tone="dark"
           className="mb-16 lg:mb-20"
@@ -60,7 +60,7 @@ export function Diagnostico() {
         {/* Phases */}
         <div
           ref={ref}
-          className="grid grid-cols-1 gap-3 md:grid-cols-3"
+          className="grid grid-cols-1 gap-3 md:grid-cols-2 xl:grid-cols-4"
           onMouseEnter={() => setPaused(true)}
           onMouseLeave={() => setPaused(false)}
         >
@@ -147,8 +147,8 @@ export function Diagnostico() {
             </Reveal>
             <Reveal delay={80}>
               <h3 className="text-4xl leading-[1.02] font-bold tracking-[-0.03em] text-balance sm:text-5xl">
-                Un plan claro. <br />
-                Una decisión <span className="text-cyan">con criterio.</span>
+                Saber qué hacer. <br />
+                <span className="text-cyan">Y saber por qué.</span>
               </h3>
             </Reveal>
             <Reveal delay={160}>
@@ -170,14 +170,17 @@ export function Diagnostico() {
             <ol className="overflow-hidden rounded-[1.75rem] border border-white/10 bg-white/[0.04]">
               {d.items.map((item, i) => (
                 <li
-                  key={item}
+                  key={item.title}
                   className="group flex items-center gap-5 border-b border-white/10 px-6 py-6 transition-colors duration-300 last:border-b-0 hover:bg-white/[0.06] sm:px-8"
                 >
                   <span className="text-sm font-bold text-cyan tabular-nums">
                     0{i + 1}
                   </span>
                   <span className="text-xl font-bold tracking-tight transition-transform duration-500 ease-[var(--ease-out-expo)] group-hover:translate-x-1 sm:text-2xl">
-                    {item}
+                    {item.title}
+                    <span className="ml-3 text-base font-medium text-white/60 sm:text-lg">
+                      {item.text}
+                    </span>
                   </span>
                   <HugeiconsIcon
                     icon={CheckmarkCircle02Icon}

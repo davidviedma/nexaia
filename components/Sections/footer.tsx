@@ -163,7 +163,7 @@ export function Footer() {
             text="Nexa IA"
             step={45}
             className="text-[clamp(5.5rem,27vw,30rem)] leading-[0.78] font-bold tracking-[-0.07em] whitespace-nowrap"
-            letterClassName="bg-gradient-to-b from-brand-100 via-brand-50 to-white bg-clip-text text-transparent"
+            letterClassName="-mx-[0.06em] bg-gradient-to-b from-brand-100 via-brand-50 to-white bg-clip-text px-[0.06em] py-[0.08em] text-transparent"
           />
         </div>
 

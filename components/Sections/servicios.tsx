@@ -84,7 +84,7 @@ function AutoIllustration() {
   )
 }
 
-function RedesIllustration() {
+function IaIllustration() {
   return (
     <div className="relative flex h-24 w-full flex-col justify-center gap-2 rounded-xl border border-line bg-white p-3 shadow-sm">
       <div className="w-fit max-w-[70%] rounded-2xl rounded-bl-sm bg-surface px-3 py-1.5">
@@ -112,7 +112,7 @@ const illustrations: Record<Servicio["id"], () => React.JSX.Element> = {
   web: WebIllustration,
   crm: CrmIllustration,
   automatizacion: AutoIllustration,
-  redes: RedesIllustration,
+  ia: IaIllustration,
 }
 
 /* ── Bento card: spotlight, border glow, particles, ripple ──── */
@@ -210,6 +210,66 @@ export function Servicios() {
             }))}
           />
         </Reveal>
+
+        {/* Automatización vs IA aplicada */}
+        <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
+          <div className="lg:col-span-4">
+            <SectionHeading
+              kicker={servicios.compare.kicker}
+              lines={["Cada tarea pide", "una solución distinta."]}
+              text={servicios.compare.text}
+            />
+          </div>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8">
+            {servicios.compare.items.map((c, i) => (
+              <Reveal key={c.title} delay={i * 120} className="h-full">
+                <div
+                  className={cn(
+                    "flex h-full flex-col gap-5 rounded-[1.75rem] border p-6 sm:p-7",
+                    i === 0
+                      ? "border-line bg-surface"
+                      : "border-navy bg-navy text-white"
+                  )}
+                >
+                  <p
+                    className={cn(
+                      "text-[11px] font-bold tracking-[0.2em] uppercase",
+                      i === 0 ? "text-brand-600" : "text-cyan"
+                    )}
+                  >
+                    {c.title}
+                  </p>
+                  <div className="flex flex-wrap items-center gap-3 text-xl font-bold tracking-tight sm:text-2xl">
+                    <span>{c.from}</span>
+                    <HugeiconsIcon
+                      icon={ArrowUpRight01Icon}
+                      size={18}
+                      className={cn(
+                        "rotate-45",
+                        i === 0 ? "text-brand-600" : "text-cyan"
+                      )}
+                    />
+                    <span>{c.to}</span>
+                  </div>
+                  <p
+                    className={cn(
+                      "text-base",
+                      i === 0 ? "text-ink-soft" : "text-white/70"
+                    )}
+                  >
+                    {c.text}
+                  </p>
+                </div>
+              </Reveal>
+            ))}
+            <Reveal delay={260} className="sm:col-span-2">
+              <p className="flex items-center gap-3 text-sm text-ink-soft">
+                <span className="h-px w-8 bg-cyan" />
+                {servicios.compare.footer}
+              </p>
+            </Reveal>
+          </div>
+        </div>
       </div>
     </section>
   )

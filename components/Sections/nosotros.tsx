@@ -2,6 +2,7 @@
 
 import { useRef, type MouseEvent } from "react"
 import { nosotros } from "@/lib/content"
+import { cn } from "@/lib/utils"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 import { Parallax } from "@/components/motion/parallax"
@@ -35,7 +36,7 @@ export function Nosotros() {
           <div className="flex flex-col gap-8 lg:col-span-6">
             <SectionHeading
               kicker={nosotros.kicker}
-              lines={["Dos emprendedores.", "Una idea muy clara."]}
+              lines={["Tecnología avanzada.", "Trato cercano."]}
               text={nosotros.text}
             />
             <Reveal delay={300}>
@@ -139,6 +140,79 @@ export function Nosotros() {
               </GlareHover>
             </Parallax>
           </Reveal>
+        </div>
+
+        {/* Tu parte / Nuestra parte */}
+        <div className="mt-20 grid grid-cols-1 gap-6 lg:grid-cols-12 lg:gap-10">
+          <Reveal className="lg:col-span-4">
+            <h3 className="text-3xl leading-[1.05] font-bold tracking-[-0.03em] text-balance text-ink sm:text-4xl">
+              {nosotros.split.title}
+            </h3>
+            <p className="mt-4 text-base text-ink-soft">
+              {nosotros.split.footer}
+            </p>
+          </Reveal>
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8">
+            {[nosotros.split.yours, nosotros.split.ours].map((col, i) => (
+              <Reveal key={col.title} delay={i * 120} className="h-full">
+                <div
+                  className={cn(
+                    "flex h-full flex-col gap-5 rounded-[1.75rem] border p-6 sm:p-7",
+                    i === 0
+                      ? "border-line bg-white"
+                      : "border-brand-600 bg-brand-600 text-white"
+                  )}
+                >
+                  <p
+                    className={cn(
+                      "text-[11px] font-bold tracking-[0.2em] uppercase",
+                      i === 0 ? "text-brand-600" : "text-cyan"
+                    )}
+                  >
+                    {col.title}
+                  </p>
+                  <ul className="flex flex-col gap-3">
+                    {col.items.map((it, n) => (
+                      <li
+                        key={it}
+                        className="flex items-start gap-3 text-lg font-semibold tracking-tight"
+                      >
+                        <span
+                          className={cn(
+                            "mt-0.5 text-xs font-bold tabular-nums",
+                            i === 0 ? "text-ink-soft" : "text-cyan"
+                          )}
+                        >
+                          0{n + 1}
+                        </span>
+                        {it}
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </div>
+
+        {/* Lo que puedes esperar */}
+        <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-3">
+          {nosotros.expect.map((e, i) => (
+            <Reveal key={e.title} delay={i * 100}>
+              <div className="group flex items-start gap-4 rounded-[1.5rem] border border-line bg-white p-5 transition-colors duration-300 hover:border-brand-600">
+                <span className="relative mt-2 flex size-3 shrink-0 items-center justify-center">
+                  <span className="absolute inset-0 rounded-full bg-cyan/30 transition-transform duration-500 group-hover:scale-[2.2]" />
+                  <span className="relative size-2 rounded-full bg-cyan" />
+                </span>
+                <span className="flex flex-col gap-1">
+                  <span className="text-xl font-bold tracking-tight text-ink">
+                    {e.title}
+                  </span>
+                  <span className="text-sm text-ink-soft">{e.text}</span>
+                </span>
+              </div>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>

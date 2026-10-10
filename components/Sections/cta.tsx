@@ -26,6 +26,7 @@ export function Cta() {
   const [nombre, setNombre] = useState("")
   const [negocio, setNegocio] = useState("")
   const [tarea, setTarea] = useState("")
+  const [proceso, setProceso] = useState("")
 
   const wa = whatsappHref(
     `Hola Nexa IA, me gustaría solicitar el Diagnóstico Nexa. Tengo un negocio de ${negocio || "..."} y la tarea que más tiempo me quita es ${tarea || "..."}.`
@@ -33,7 +34,12 @@ export function Cta() {
 
   function onSubmit(e: FormEvent) {
     e.preventDefault()
-    window.location.href = diagnosticoMailto({ nombre, negocio, tarea })
+    window.location.href = diagnosticoMailto({
+      nombre,
+      negocio,
+      tarea,
+      proceso,
+    })
   }
 
   return (
@@ -65,7 +71,7 @@ export function Cta() {
               <Kicker tone="blue">{cta.kicker}</Kicker>
             </Reveal>
             <RevealLines
-              lines={["Cuéntanos qué", "te está quitando", "tiempo."]}
+              lines={cta.title}
               delay={80}
               className="text-5xl leading-[0.98] font-bold tracking-[-0.035em] text-balance sm:text-6xl lg:text-7xl"
             />
@@ -112,11 +118,17 @@ export function Cta() {
                 />
               </div>
               <textarea
-                className={cn(fieldClass, "min-h-32 resize-y")}
-                placeholder="¿Qué tarea te quita más tiempo?"
+                className={cn(fieldClass, "min-h-28 resize-y")}
+                placeholder={`¿Qué te está quitando más tiempo? Ej.: ${cta.example}`}
                 value={tarea}
                 onChange={(e) => setTarea(e.target.value)}
                 required
+              />
+              <input
+                className={fieldClass}
+                placeholder="¿Cómo lo estás gestionando ahora?"
+                value={proceso}
+                onChange={(e) => setProceso(e.target.value)}
               />
               <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
                 <Magnetic strength={0.15}>

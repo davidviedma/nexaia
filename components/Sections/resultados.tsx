@@ -251,7 +251,7 @@ export function Resultados() {
         >
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <span className="text-[11px] font-bold tracking-[0.2em] text-ink-soft uppercase">
-              Esas horas sirven para
+              {resultados.usesLead}
             </span>
             {resultados.uses.map((u) => (
               <span
