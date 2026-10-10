@@ -7,7 +7,8 @@ export const nav = {
     { label: "Servicios", href: "/#servicios" },
     { label: "Tu día a día", href: "/#tareas" },
     { label: "Método", href: "/#metodo" },
-    { label: "Simulador", href: "/#simulador" },
+    { label: "Resultados", href: "/#resultados" },
+    { label: "Opiniones", href: "/#testimonios" },
     { label: "Nosotros", href: "/#nosotros" },
   ],
   cta: "Pedir diagnóstico",
@@ -140,11 +141,93 @@ export const tareas = {
 export const proceso = {
   kicker: "Así trabajamos",
   title: "Primero entendemos tu negocio.",
+  text: "Cuatro pasos, sin tecnicismos y sin parar tu actividad.",
   steps: [
-    { title: "Diagnóstico", text: "Analizamos cómo trabajas." },
-    { title: "Propuesta", text: "Priorizamos las mejoras." },
-    { title: "Implementación", text: "Las ponemos en marcha." },
-    { title: "Acompañamiento", text: "Seguimos a tu lado." },
+    {
+      title: "Diagnóstico",
+      text: "Analizamos cómo trabajas.",
+      points: [
+        "Nos cuentas un día normal",
+        "Detectamos dónde se pierde tiempo",
+      ],
+    },
+    {
+      title: "Propuesta",
+      text: "Priorizamos las mejoras.",
+      points: ["Qué hacer primero", "Impacto estimado en horas y euros"],
+    },
+    {
+      title: "Implementación",
+      text: "Las ponemos en marcha.",
+      points: [
+        "Conectamos las herramientas que ya usas",
+        "Te explicamos cada paso",
+      ],
+    },
+    {
+      title: "Acompañamiento",
+      text: "Seguimos a tu lado.",
+      points: [
+        "Revisamos las excepciones contigo",
+        "Ajustamos lo que haga falta",
+      ],
+    },
+  ],
+}
+
+/**
+ * TESTIMONIOS DE EJEMPLO.
+ * Son textos ficticios para ver el diseño. Sustitúyelos por reseñas reales
+ * (con permiso de cada cliente) antes de publicar: la normativa europea de
+ * consumo prohíbe las reseñas falsas. Pon `placeholder: false` cuando sean reales.
+ */
+export const testimonios = {
+  kicker: "Lo que dicen",
+  title: ["Negocios como el tuyo,", "con más tiempo."],
+  placeholder: true,
+  items: [
+    {
+      name: "Laura M.",
+      role: "Peluquería · Valencia",
+      quote:
+        "Antes perdía las mañanas confirmando citas por WhatsApp. Ahora los recordatorios salen solos y yo solo contesto a quien cambia la hora.",
+      service: "Automatización",
+    },
+    {
+      name: "Javier R.",
+      role: "Clínica dental · Zaragoza",
+      quote:
+        "El diagnóstico nos abrió los ojos: no necesitábamos IA para todo, solo ordenar la agenda y los seguimientos. Ahorro real desde el primer mes.",
+      service: "Diagnóstico Nexa",
+    },
+    {
+      name: "Marta G.",
+      role: "Asesoría fiscal · Autónoma",
+      quote:
+        "Me montaron un CRM sencillo y ya no se me escapa ningún presupuesto. Sé a quién le falta respuesta sin revisar el correo entero.",
+      service: "CRM",
+    },
+    {
+      name: "Sergio P.",
+      role: "Taller mecánico · Sevilla",
+      quote:
+        "La web nueva trae llamadas todas las semanas. Lo mejor es que me explicaron cada cosa como si fuera para mi abuelo.",
+      service: "Web",
+    },
+    {
+      name: "Nuria C.",
+      role: "Tienda de decoración online",
+      quote:
+        "Dejamos de copiar pedidos a mano a la hoja de cálculo. Lo conectaron todo y ahora reviso excepciones, no filas.",
+      service: "Automatización",
+    },
+    {
+      name: "Álvaro D.",
+      role: "Fisioterapeuta · Autónomo",
+      quote:
+        "Pedir reseñas después de cada sesión era lo que siempre dejaba para luego. Ahora sale solo y respondo con un borrador que ya viene hecho.",
+      service: "Reseñas",
+    },
   ],
 }
 
@@ -203,20 +286,30 @@ export const diagnostico = {
   },
 }
 
-export const simulador = {
-  kicker: "Caso ilustrativo · Peluquería",
-  title: "¿Y si confirmar citas ocupara menos tiempo?",
-  text: "Un ejemplo con números claros. Mueve los controles y haz las cuentas de tu negocio.",
+export const resultados = {
+  kicker: "Lo que recuperas",
+  title: ["Menos tareas a mano.", "Más horas para tu negocio."],
+  text: "Tomamos una sola tarea, confirmar citas en una peluquería, y la conectamos a la agenda. Esto es lo que cambia.",
+  hero: {
+    value: 70,
+    suffix: "%",
+    prefix: "−",
+    label: "menos tiempo confirmando citas",
+    detail: "De 10 h a 3 h al mes. El equipo solo revisa excepciones.",
+  },
+  before: { label: "Antes · todo a mano", hours: 10 },
+  after: { label: "Después · revisión y supervisión", hours: 3 },
+  hourRate: 20,
+  tasks: 5,
+  uses: ["Atender mejor.", "Preparar el día.", "Hacer seguimiento."],
   flow: [
     "Cita registrada",
     "Recordatorio enviado",
     "Respuesta del cliente",
     "Agenda actualizada",
   ],
-  disclaimer:
-    "Simulación de un proceso. No es un resultado real ni un ahorro garantizado: hay que considerar herramientas, implantación y mantenimiento.",
-  teamNote:
-    "Las dudas y los cambios pasan a una persona. Un recordatorio puede funcionar con reglas, sin IA.",
+  footnote:
+    "Escenario ilustrativo: 200 confirmaciones al mes × 3 minutos, valorando la hora a 20 €. No es un resultado real ni un ahorro garantizado: hay que considerar herramientas, implantación y mantenimiento. Un recordatorio puede funcionar con reglas, sin IA, y las dudas pasan siempre a una persona.",
 }
 
 export const nosotros = {

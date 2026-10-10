@@ -6,7 +6,8 @@ import { Servicios } from "@/components/Sections/servicios"
 import { Tareas } from "@/components/Sections/tareas"
 import { Proceso } from "@/components/Sections/proceso"
 import { Diagnostico } from "@/components/Sections/diagnostico"
-import { Simulador } from "@/components/Sections/simulador"
+import { Resultados } from "@/components/Sections/resultados"
+import { Testimonios } from "@/components/Sections/testimonios"
 import { Nosotros } from "@/components/Sections/nosotros"
 import { Faqs } from "@/components/Sections/faqs"
 import { Cta } from "@/components/Sections/cta"
@@ -41,7 +42,8 @@ export default function Page() {
         <Tareas />
         <Proceso />
         <Diagnostico />
-        <Simulador />
+        <Resultados />
+        <Testimonios />
         <Nosotros />
         <Faqs />
         <Cta />

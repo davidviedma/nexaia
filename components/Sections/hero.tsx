@@ -129,10 +129,10 @@ export function Hero() {
       {/* Cursor glow */}
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10 opacity-70"
+        className="pointer-events-none absolute inset-0 -z-10 opacity-60"
         style={{
           background:
-            "radial-gradient(260px circle at var(--glow-x) var(--glow-y), rgba(6,195,214,0.22), transparent 70%)",
+            "radial-gradient(120px circle at var(--glow-x) var(--glow-y), rgba(6,195,214,0.10), transparent 70%)",
         }}
       />
 

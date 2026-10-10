@@ -111,7 +111,7 @@ export function Nav() {
     pill.style.opacity = "1"
   })
 
-  const islandWidth = isMobile ? (expanded ? 190 : 60) : expanded ? 760 : 60
+  const islandWidth = isMobile ? (expanded ? 190 : 60) : expanded ? 900 : 60
 
   return (
     <div className="pointer-events-none fixed inset-x-0 top-4 z-50 flex justify-center">
