@@ -59,7 +59,8 @@ export function Nav() {
 
       // Detect whether the island sits on a dark section.
       const probe = document.elementFromPoint(window.innerWidth / 2, 80)
-      const darkHost = probe?.closest("[data-theme='dark']")
+      const themed = probe?.closest<HTMLElement>("[data-theme]")
+      const darkHost = themed?.dataset.theme === "dark" ? themed : null
       setOnDark(Boolean(darkHost))
     }
 
