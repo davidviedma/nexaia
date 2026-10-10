@@ -2,17 +2,18 @@
 
 import { useEffect, useRef, useState } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
+import Image from "next/image"
 import {
   ArrowRight02Icon,
   ArrowDown01Icon,
-  CheckmarkCircle02Icon,
-  Calendar03Icon,
+  BrowserIcon,
+  LeftToRightListBulletIcon,
+  Clock01Icon,
   Message01Icon,
 } from "@hugeicons/core-free-icons"
 
 import { Button } from "@/components/ui/button"
 import { Magnetic } from "@/components/magnetic"
-import { NeuralOrb } from "@/components/neural-orb"
 import { DotGrid } from "@/components/bits/dot-grid"
 import {
   BlurText,
@@ -51,27 +52,87 @@ function RotatingWord({ words }: { words: string[] }) {
   )
 }
 
-/* Floating automation chips around the orb */
-const chips = [
+/* Feature nodes around the Nexa core */
+const features = [
   {
-    icon: CheckmarkCircle02Icon,
-    title: "Cita confirmada",
-    text: "Sin llamadas",
-    className: "top-[10%] left-[0%] [animation-delay:-2s]",
+    icon: BrowserIcon,
+    title: "Web",
+    text: "Captar clientes",
+    pos: "lg:top-0 lg:left-0",
+    path: "M 300 165 L 500 310",
+    delay: "0s",
   },
   {
-    icon: Calendar03Icon,
-    title: "Recordatorio enviado",
-    text: "Agenda actualizada",
-    className: "top-[42%] right-[-2%] [animation-delay:-6s]",
+    icon: LeftToRightListBulletIcon,
+    title: "CRM",
+    text: "Hacer seguimiento",
+    pos: "lg:top-0 lg:right-0",
+    path: "M 700 165 L 500 310",
+    delay: "-1.2s",
+  },
+  {
+    icon: Clock01Icon,
+    title: "Automatización",
+    text: "Agilizar tareas",
+    pos: "lg:bottom-0 lg:left-0",
+    path: "M 300 455 L 500 310",
+    delay: "-2.4s",
   },
   {
     icon: Message01Icon,
-    title: "Duda derivada al equipo",
-    text: "Una persona responde",
-    className: "bottom-[8%] left-[6%] [animation-delay:-10s]",
+    title: "Redes",
+    text: "Comunicar mejor",
+    pos: "lg:bottom-0 lg:right-0",
+    path: "M 700 455 L 500 310",
+    delay: "-3.6s",
   },
 ]
+
+function Core() {
+  return (
+    <div className="relative flex size-44 items-center justify-center sm:size-52 lg:size-56">
+      {/* rings */}
+      <span
+        aria-hidden
+        className="absolute inset-0 rounded-full border border-white/15"
+      />
+      <span
+        aria-hidden
+        className="absolute inset-[12%] rounded-full border border-white/10"
+      />
+      <span
+        aria-hidden
+        className="animate-spin-slow absolute inset-[-10%] rounded-full"
+        style={{
+          background:
+            "conic-gradient(from 0deg, transparent 0deg, rgba(6,195,214,0.55) 40deg, transparent 80deg)",
+          WebkitMask:
+            "radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px))",
+          mask: "radial-gradient(farthest-side, transparent calc(100% - 2px), #000 calc(100% - 1px))",
+        }}
+      />
+      <span
+        aria-hidden
+        className="absolute inset-[22%] rounded-full"
+        style={{
+          background:
+            "radial-gradient(circle, rgba(6,195,214,0.35), rgba(25,81,252,0.15) 55%, transparent 75%)",
+        }}
+      />
+      {/* disc with logo */}
+      <span className="relative flex size-[56%] items-center justify-center overflow-hidden rounded-full border border-cyan/40 bg-[#061329] shadow-[0_0_60px_-10px_rgba(6,195,214,0.55)]">
+        <Image
+          src="/logo-icon.png"
+          alt="Nexa IA"
+          width={160}
+          height={160}
+          priority
+          className="size-[82%] object-contain"
+        />
+      </span>
+    </div>
+  )
+}
 
 export function Hero() {
   const contentRef = useRef<HTMLDivElement>(null)
@@ -85,6 +146,7 @@ export function Hero() {
       read: () => ({ y: window.scrollY, vh: window.innerHeight }),
       write: ({ y, vh }) => {
         if (y > vh * 1.2) return
+        if (window.innerWidth < 1024) return
         const p = Math.min(1, y / (vh * 0.9))
         if (contentRef.current) {
           contentRef.current.style.transform = `translate3d(0, ${(y * 0.25).toFixed(1)}px, 0)`
@@ -166,7 +228,7 @@ export function Hero() {
 
       <div className="relative z-10 container mx-auto grid flex-1 grid-cols-1 items-center gap-10 px-6 pt-32 pb-16 sm:px-10 lg:grid-cols-12 lg:px-16 lg:pt-28">
         {/* Copy */}
-        <div ref={contentRef} className="will-change-transform lg:col-span-7">
+        <div ref={contentRef} className="will-change-transform lg:col-span-6">
           <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase [animation-delay:120ms]">
             <span className="animate-pulse-dot size-1.5 rounded-full bg-cyan" />
             <ShinyText color="rgba(6,195,214,0.75)" shine="#ffffff" speed={3.5}>
@@ -174,7 +236,7 @@ export function Hero() {
             </ShinyText>
           </p>
 
-          <h1 className="text-[2.9rem] leading-[0.98] font-bold tracking-[-0.035em] text-white sm:text-6xl md:text-7xl lg:text-[4.9rem] xl:text-[5.8rem]">
+          <h1 className="text-[2.9rem] leading-[0.98] font-bold tracking-[-0.035em] text-white sm:text-6xl md:text-7xl lg:text-[4.4rem] xl:text-[5.2rem]">
             {hero.title.map((line, i) =>
               i === hero.title.length - 1 ? (
                 <span key={line} className="block">
@@ -227,30 +289,83 @@ export function Hero() {
           </div>
         </div>
 
-        {/* Visual: AI core + floating chips */}
+        {/* Visual: Nexa core with the four features wired to it */}
         <div
           ref={visualRef}
-          className="animate-fade-up relative mx-auto aspect-square w-full max-w-[30rem] will-change-transform [animation-delay:400ms] lg:col-span-5 lg:max-w-none"
+          className="animate-fade-up relative will-change-transform [animation-delay:400ms] lg:col-span-6"
         >
-          <NeuralOrb className="absolute inset-0" />
-          {chips.map((c) => (
-            <div
-              key={c.title}
-              className={cn(
-                "animate-float absolute flex items-center gap-3 rounded-2xl border border-white/15 bg-navy/75 py-2.5 pr-4 pl-2.5 text-white shadow-[0_20px_50px_-20px_rgba(3,25,91,0.8)]",
-                c.className
-              )}
-            >
-              <span className="flex size-9 items-center justify-center rounded-xl bg-cyan/15 text-cyan">
-                <HugeiconsIcon icon={c.icon} size={18} />
-              </span>
-              <span className="flex flex-col leading-tight">
-                <span className="text-sm font-bold">{c.title}</span>
-                <span className="text-[11px] text-white/60">{c.text}</span>
-              </span>
-              <span className="animate-pulse-dot ml-1 size-1.5 rounded-full bg-cyan" />
+          {/* Mobile: core + 2×2 grid. Desktop: corner cards around the core. */}
+          <div className="grid grid-cols-2 gap-3 lg:relative lg:block lg:aspect-[1000/620]">
+            <div className="col-span-2 flex justify-center py-2 lg:absolute lg:top-1/2 lg:left-1/2 lg:z-[2] lg:-translate-x-1/2 lg:-translate-y-1/2 lg:py-0">
+              <Core />
             </div>
-          ))}
+
+            {/* Connectors with travelling light */}
+            <svg
+              aria-hidden
+              viewBox="0 0 1000 620"
+              preserveAspectRatio="none"
+              className="pointer-events-none absolute inset-0 hidden h-full w-full lg:block"
+            >
+              <defs>
+                <linearGradient id="hero-link" x1="0" y1="0" x2="1" y2="0">
+                  <stop offset="0" stopColor="rgba(6,195,214,0.15)" />
+                  <stop offset="1" stopColor="rgba(6,195,214,0.7)" />
+                </linearGradient>
+              </defs>
+              {features.map((f) => (
+                <g key={f.title}>
+                  <path
+                    d={f.path}
+                    stroke="url(#hero-link)"
+                    strokeWidth="1.5"
+                    fill="none"
+                    vectorEffect="non-scaling-stroke"
+                  />
+                  <circle r="4" fill="#ffffff">
+                    <animateMotion
+                      dur="2.8s"
+                      begin={f.delay}
+                      repeatCount="indefinite"
+                      path={f.path}
+                      keyPoints="0;1"
+                      keyTimes="0;1"
+                      calcMode="linear"
+                    />
+                  </circle>
+                  <circle r="9" fill="rgba(6,195,214,0.25)">
+                    <animateMotion
+                      dur="2.8s"
+                      begin={f.delay}
+                      repeatCount="indefinite"
+                      path={f.path}
+                    />
+                  </circle>
+                </g>
+              ))}
+            </svg>
+
+            {features.map((f) => (
+              <div
+                key={f.title}
+                className={cn(
+                  "animate-float flex min-w-0 flex-col gap-3 rounded-2xl border border-white/12 bg-[#071a3d]/80 p-3.5 text-white shadow-[0_24px_60px_-28px_rgba(3,25,91,0.9)] sm:p-4 lg:absolute lg:w-[36%] lg:p-5",
+                  f.pos
+                )}
+                style={{ animationDelay: f.delay, animationDuration: "9s" }}
+              >
+                <div className="flex items-center gap-3">
+                  <span className="flex size-9 items-center justify-center rounded-xl bg-cyan/12 text-cyan">
+                    <HugeiconsIcon icon={f.icon} size={18} />
+                  </span>
+                  <span className="text-lg font-bold tracking-tight">
+                    {f.title}
+                  </span>
+                </div>
+                <span className="text-sm text-white/70">{f.text}</span>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
