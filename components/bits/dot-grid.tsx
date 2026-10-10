@@ -98,7 +98,13 @@ export function DotGrid({
       }
     }
 
+    let energy = 0
+    const wake = () => {
+      if (visible && !raf) raf = requestAnimationFrame(step)
+    }
+
     const step = () => {
+      energy = 0
       if (!reduce) {
         for (const d of dots) {
           const dx = d.x - mouse.x
@@ -119,11 +125,14 @@ export function DotGrid({
           d.vy *= 0.82
           d.x += d.vx
           d.y += d.vy
+          energy += Math.abs(d.vx) + Math.abs(d.vy)
         }
         mouse.speed *= 0.9
       }
       draw()
-      raf = visible ? requestAnimationFrame(step) : 0
+      // Sleep once everything has settled; pointer/click wakes it again.
+      const idle = reduce || (energy < 0.08 && mouse.speed < 0.05)
+      raf = visible && !idle ? requestAnimationFrame(step) : 0
     }
 
     const onMove = (e: PointerEvent) => {
@@ -135,6 +144,7 @@ export function DotGrid({
       mouse.ly = y
       mouse.x = x
       mouse.y = y
+      wake()
     }
     const onLeave = () => {
       mouse.x = -9999
@@ -155,11 +165,15 @@ export function DotGrid({
           d.vy += (dy / (dist || 1)) * f
         }
       }
+      wake()
     }
 
     const io = new IntersectionObserver(([entry]) => {
       visible = entry.isIntersecting
-      if (visible && !raf) raf = requestAnimationFrame(step)
+      if (visible) {
+        draw()
+        wake()
+      }
     })
     io.observe(canvas)
     const ro = new ResizeObserver(build)

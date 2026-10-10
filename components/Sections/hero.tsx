@@ -13,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Magnetic } from "@/components/magnetic"
 import { NeuralOrb } from "@/components/neural-orb"
+import { DotGrid } from "@/components/bits/dot-grid"
 import {
   BlurText,
   GradientText,
@@ -143,6 +144,15 @@ export function Hero() {
           background:
             "radial-gradient(circle closest-side, rgba(11,44,177,0.8), transparent 100%)",
         }}
+      />
+      {/* Interactive dot grid */}
+      <DotGrid
+        className="-z-10 opacity-80"
+        gap={32}
+        dotSize={2.5}
+        baseColor="rgba(165,243,252,0.16)"
+        activeColor="#06c3d6"
+        proximity={150}
       />
       {/* Scanline sweep */}
       <div
