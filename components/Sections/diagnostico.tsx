@@ -13,6 +13,7 @@ import { Reveal } from "@/components/reveal"
 import { Kicker, SectionHeading } from "@/components/section-heading"
 import { Button } from "@/components/ui/button"
 import { useInView } from "@/hooks/use-in-view"
+import { SpotlightCard, StarBorder } from "@/components/bits/surfaces"
 
 export function Diagnostico() {
   const [active, setActive] = useState(0)
@@ -67,7 +68,11 @@ export function Diagnostico() {
             const isActive = active === i
             return (
               <Reveal key={p.n} delay={i * 100} className="h-full">
-                <button
+                <SpotlightCard
+                  as="button"
+                  color={
+                    isActive ? "rgba(25,81,252,0.10)" : "rgba(6,195,214,0.20)"
+                  }
                   onMouseEnter={() => setActive(i)}
                   onFocus={() => setActive(i)}
                   onClick={() => setActive(i)}
@@ -128,7 +133,7 @@ export function Diagnostico() {
                       </div>
                     </div>
                   </ul>
-                </button>
+                </SpotlightCard>
               </Reveal>
             )
           })}
@@ -150,12 +155,14 @@ export function Diagnostico() {
               <p className="max-w-md text-lg text-white/65">{d.footer}</p>
             </Reveal>
             <Reveal delay={240}>
-              <Button asChild size="lg" variant="light" className="w-fit">
-                <a href="#contacto">
-                  Solicitar Diagnóstico Nexa
-                  <HugeiconsIcon icon={ArrowRight02Icon} size={16} />
-                </a>
-              </Button>
+              <StarBorder color="#06c3d6" speed={5} className="w-fit">
+                <Button asChild size="lg" variant="light" className="w-fit">
+                  <a href="#contacto">
+                    Solicitar Diagnóstico Nexa
+                    <HugeiconsIcon icon={ArrowRight02Icon} size={16} />
+                  </a>
+                </Button>
+              </StarBorder>
             </Reveal>
           </div>
 

@@ -15,6 +15,8 @@ import { Reveal } from "@/components/reveal"
 import { Kicker } from "@/components/section-heading"
 import { RevealLines } from "@/components/reveal"
 import { Button } from "@/components/ui/button"
+import { DotGrid } from "@/components/bits/dot-grid"
+import { StarBorder } from "@/components/bits/surfaces"
 import { Magnetic } from "@/components/magnetic"
 
 const fieldClass =
@@ -47,6 +49,13 @@ export function Cta() {
           background:
             "radial-gradient(800px circle at 0% 0%, rgba(6,195,214,0.35), transparent 55%), radial-gradient(700px circle at 100% 100%, rgba(3,25,91,0.6), transparent 60%)",
         }}
+      />
+      <DotGrid
+        className="z-[1] opacity-80"
+        gap={28}
+        dotSize={3}
+        baseColor="rgba(255,255,255,0.18)"
+        activeColor="#06c3d6"
       />
 
       <div className="relative z-[2] container mx-auto px-6 sm:px-10 lg:px-16">
@@ -111,20 +120,26 @@ export function Cta() {
               />
               <div className="flex flex-col gap-3 pt-2 sm:flex-row sm:items-center">
                 <Magnetic strength={0.15}>
-                  <Button
-                    type="submit"
-                    size="xl"
-                    variant="light"
+                  <StarBorder
+                    color="#ffffff"
+                    speed={4.5}
                     className="w-full sm:w-auto"
                   >
-                    <HugeiconsIcon icon={Mail01Icon} size={18} />
-                    {cta.button}
-                    <HugeiconsIcon
-                      icon={ArrowRight02Icon}
-                      size={16}
-                      className="transition-transform duration-300 group-hover/button:translate-x-1"
-                    />
-                  </Button>
+                    <Button
+                      type="submit"
+                      size="xl"
+                      variant="light"
+                      className="w-full sm:w-auto"
+                    >
+                      <HugeiconsIcon icon={Mail01Icon} size={18} />
+                      {cta.button}
+                      <HugeiconsIcon
+                        icon={ArrowRight02Icon}
+                        size={16}
+                        className="transition-transform duration-300 group-hover/button:translate-x-1"
+                      />
+                    </Button>
+                  </StarBorder>
                 </Magnetic>
                 {wa && (
                   <Button

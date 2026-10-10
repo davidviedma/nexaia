@@ -1,6 +1,7 @@
 import { mision } from "@/lib/content"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
+import { ScrollRevealText } from "@/components/bits/text-effects"
 
 export function Mision() {
   return (
@@ -11,7 +12,10 @@ export function Mision() {
             <SectionHeading
               kicker={mision.kicker}
               lines={["La tecnología", "también es", "para tu pyme."]}
+            />
+            <ScrollRevealText
               text={mision.text}
+              className="mt-6 max-w-xl text-2xl leading-snug font-medium tracking-tight text-ink sm:text-3xl"
             />
           </div>
 

@@ -9,6 +9,11 @@ import { Magnetic } from "@/components/magnetic"
 import { NodeField } from "@/components/node-field"
 import { hero } from "@/lib/content"
 import { cn } from "@/lib/utils"
+import {
+  BlurText,
+  GradientText,
+  ShinyText,
+} from "@/components/bits/text-effects"
 
 function RotatingWord({ words }: { words: string[] }) {
   const [index, setIndex] = useState(0)
@@ -142,20 +147,32 @@ export function Hero() {
         <div ref={contentRef} className="max-w-5xl will-change-transform">
           <p className="animate-fade-up mb-8 inline-flex items-center gap-3 rounded-full border border-white/15 bg-white/5 px-4 py-2 text-[11px] font-bold tracking-[0.2em] text-cyan uppercase backdrop-blur-sm [animation-delay:120ms]">
             <span className="animate-pulse-dot size-1.5 rounded-full bg-cyan" />
-            {hero.kicker}
+            <ShinyText color="rgba(6,195,214,0.75)" shine="#ffffff" speed={3.5}>
+              {hero.kicker}
+            </ShinyText>
           </p>
 
           <h1 className="text-[2.9rem] leading-[0.98] font-bold tracking-[-0.035em] text-white sm:text-6xl md:text-7xl lg:text-[6.2rem]">
-            {hero.title.map((line, i) => (
-              <span key={line} className="mask-line is-visible block">
-                <span
-                  className="animate-rise block"
-                  style={{ animationDelay: `${180 + i * 110}ms` }}
-                >
-                  {line}
+            {hero.title.map((line, i) =>
+              i === hero.title.length - 1 ? (
+                <span key={line} className="block">
+                  <GradientText className="animate-blur-in inline-block">
+                    <span style={{ animationDelay: `${180 + i * 160}ms` }}>
+                      {line}
+                    </span>
+                  </GradientText>
                 </span>
-              </span>
-            ))}
+              ) : (
+                <BlurText
+                  key={line}
+                  as="span"
+                  text={line}
+                  delay={180 + i * 160}
+                  step={90}
+                  className="block"
+                />
+              )
+            )}
           </h1>
 
           <div className="animate-fade-up mt-8 flex flex-col gap-3 [animation-delay:620ms] sm:mt-10 sm:flex-row sm:items-end sm:gap-10">

@@ -10,6 +10,7 @@ import {
 
 import { nav } from "@/lib/content"
 import { site, whatsappHref } from "@/lib/site"
+import { FloatText } from "@/components/bits/text-effects"
 
 export function Footer() {
   const socials = [
@@ -116,7 +117,17 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-line pt-6 text-xs text-ink-soft sm:flex-row sm:items-center sm:justify-between">
+        {/* Brand bar */}
+        <div aria-hidden className="mt-16 overflow-hidden select-none">
+          <FloatText
+            text="Nexa IA"
+            step={45}
+            className="w-full justify-center text-[clamp(5rem,19vw,17rem)] leading-[0.85] font-bold tracking-[-0.06em]"
+            letterClassName="bg-gradient-to-b from-brand-100 via-brand-50 to-white bg-clip-text text-transparent"
+          />
+        </div>
+
+        <div className="mt-6 flex flex-col gap-3 border-t border-line pt-6 text-xs text-ink-soft sm:flex-row sm:items-center sm:justify-between">
           <p>
             © {new Date().getFullYear()} {site.name}. Todos los derechos
             reservados.

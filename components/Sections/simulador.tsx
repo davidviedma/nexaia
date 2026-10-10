@@ -11,6 +11,7 @@ import { SectionHeading } from "@/components/section-heading"
 import { Button } from "@/components/ui/button"
 import { useCountUp } from "@/hooks/use-count-up"
 import { useInView } from "@/hooks/use-in-view"
+import { RollingNumber } from "@/components/bits/text-effects"
 
 /* Model from the illustrative case:
  *   before  = tasks × minutes
@@ -233,7 +234,7 @@ export function Simulador() {
                       Valor teórico de ese tiempo
                     </p>
                     <p className="text-6xl font-bold tracking-[-0.04em] tabular-nums sm:text-7xl">
-                      {Math.round(animEuros).toLocaleString("es-ES")} €
+                      <RollingNumber value={animEuros} /> €
                     </p>
                     <p className="text-white/65">
                       {fmtHours(saved)} h × {rate} € al mes

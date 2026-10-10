@@ -7,6 +7,7 @@ import { SITE_URL, site } from "@/lib/site"
 import { SmoothScroll } from "@/components/motion/smooth-scroll"
 import { Cursor } from "@/components/motion/cursor"
 import { Preloader } from "@/components/motion/preloader"
+import { ClickSpark } from "@/components/bits/click-spark"
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-sans" })
 const fontMono = Geist_Mono({ subsets: ["latin"], variable: "--font-mono" })
@@ -108,6 +109,7 @@ export default function RootLayout({
         <Preloader />
         <SmoothScroll />
         <Cursor />
+        <ClickSpark />
         {children}
       </body>
     </html>

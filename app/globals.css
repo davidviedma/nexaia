@@ -554,3 +554,320 @@ html.cursor-active .nexa-cursor-ring {
 .nexa-cursor-dot[data-state="hover"] {
   opacity: 0 !important;
 }
+
+/* ── React Bits–style effects ───────────────────────────────── */
+@keyframes blur-in {
+  0% {
+    opacity: 0;
+    filter: blur(12px);
+    transform: translate3d(0, 28px, 0);
+  }
+  55% {
+    opacity: 0.7;
+    filter: blur(4px);
+    transform: translate3d(0, -3px, 0);
+  }
+  100% {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.animate-blur-in {
+  animation: blur-in 0.95s var(--ease-out-expo) both;
+}
+
+html.is-loading .animate-blur-in {
+  animation-play-state: paused;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 120% 0;
+  }
+  100% {
+    background-position: -120% 0;
+  }
+}
+
+.shiny-text {
+  color: transparent;
+  background-image: linear-gradient(
+    110deg,
+    var(--shine-base) 0%,
+    var(--shine-base) 40%,
+    var(--shine-color) 50%,
+    var(--shine-base) 60%,
+    var(--shine-base) 100%
+  );
+  background-size: 220% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: shine 4s linear infinite;
+}
+
+@keyframes gradient-flow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 200% 50%;
+  }
+}
+
+.gradient-text {
+  color: transparent;
+  background-size: 200% auto;
+  background-clip: text;
+  -webkit-background-clip: text;
+  animation: gradient-flow 6s linear infinite;
+}
+
+/* Magic Bento */
+.bento-card {
+  --glow-x: 50%;
+  --glow-y: 50%;
+  --glow-intensity: 0;
+  --glow-radius: 320px;
+  transition:
+    transform 0.5s var(--ease-out-expo),
+    border-color 0.4s ease,
+    box-shadow 0.5s var(--ease-out-expo);
+}
+
+.bento-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 2px;
+  border-radius: inherit;
+  background: radial-gradient(
+    var(--glow-radius) circle at var(--glow-x) var(--glow-y),
+    rgba(25, 81, 252, calc(var(--glow-intensity) * 0.9)) 0%,
+    rgba(6, 195, 214, calc(var(--glow-intensity) * 0.45)) 30%,
+    transparent 60%
+  );
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bento-card:hover {
+  box-shadow:
+    0 28px 60px -28px rgba(25, 81, 252, 0.35),
+    0 0 40px rgba(25, 81, 252, calc(var(--glow-intensity) * 0.18));
+}
+
+@keyframes bento-particle {
+  0% {
+    opacity: 0;
+    transform: translate3d(0, 0, 0) scale(0);
+  }
+  12% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: translate3d(var(--dx), var(--dy), 0) scale(1.1);
+  }
+  100% {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+}
+
+.bento-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: bento-particle var(--dur, 3s) ease-in-out infinite;
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+@keyframes bento-ripple {
+  0% {
+    opacity: 1;
+    transform: scale(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1);
+  }
+}
+
+.bento-ripple {
+  position: absolute;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 3;
+  animation: bento-ripple 0.8s ease-out forwards;
+}
+
+/* Spotlight Card */
+.spotlight-card {
+  --spot-x: 50%;
+  --spot-y: 50%;
+  position: relative;
+  overflow: hidden;
+}
+
+.spotlight-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  background: radial-gradient(
+    circle at var(--spot-x) var(--spot-y),
+    var(--spot-color),
+    transparent 60%
+  );
+}
+
+.spotlight-card:hover::before,
+.spotlight-card:focus-within::before {
+  opacity: 1;
+}
+
+.spotlight-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glare Hover */
+.glare-hover {
+  position: relative;
+  overflow: hidden;
+}
+
+.glare-hover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: linear-gradient(
+    var(--glare-angle),
+    transparent 40%,
+    rgba(255, 255, 255, var(--glare-opacity)) 50%,
+    transparent 60%
+  );
+  background-size: var(--glare-size) var(--glare-size);
+  background-position: 0% 0%;
+  background-repeat: no-repeat;
+  transition: background-position 0s;
+}
+
+.glare-hover:hover::after {
+  background-position: 100% 100%;
+  transition: background-position var(--glare-duration) var(--ease-out-expo);
+}
+
+/* Star Border */
+@keyframes star-movement-bottom {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(-100%, 0%);
+    opacity: 0;
+  }
+}
+
+@keyframes star-movement-top {
+  0% {
+    transform: translate(0%, 0%);
+    opacity: 1;
+  }
+  100% {
+    transform: translate(100%, 0%);
+    opacity: 0;
+  }
+}
+
+.star-border__bottom,
+.star-border__top {
+  position: absolute;
+  width: 300%;
+  height: 50%;
+  border-radius: 50%;
+  opacity: 0.8;
+  z-index: 0;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+.star-border__bottom {
+  bottom: -12px;
+  right: -250%;
+  animation-name: star-movement-bottom;
+}
+
+.star-border__top {
+  top: -12px;
+  left: -250%;
+  animation-name: star-movement-top;
+}
+
+/* Scroll Float letters */
+.float-letter {
+  transform: translateY(110%) rotate(4deg);
+  opacity: 0;
+  transition:
+    transform 0.9s var(--ease-out-expo),
+    opacity 0.6s ease;
+}
+
+.is-visible .float-letter {
+  transform: translateY(0) rotate(0);
+  opacity: 1;
+}
+
+/* Pill nav indicator */
+.nav-pill {
+  position: absolute;
+  top: 50%;
+  height: 36px;
+  border-radius: 999px;
+  transform: translateY(-50%);
+  transition:
+    left 0.45s var(--ease-spring),
+    width 0.45s var(--ease-spring),
+    opacity 0.25s ease,
+    background-color 0.3s ease;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-blur-in,
+  .shiny-text,
+  .gradient-text,
+  .star-border__bottom,
+  .star-border__top,
+  .bento-particle {
+    animation: none !important;
+  }
+  .float-letter {
+    transform: none;
+    opacity: 1;
+    transition: none;
+  }
+}

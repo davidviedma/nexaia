@@ -1,6 +1,5 @@
 "use client"
 
-import { useRef, type MouseEvent } from "react"
 import { HugeiconsIcon } from "@hugeicons/react"
 import { ArrowUpRight01Icon } from "@hugeicons/core-free-icons"
 
@@ -8,6 +7,8 @@ import { servicios, type Servicio } from "@/lib/content"
 import { cn } from "@/lib/utils"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
+import { BentoCard, BentoGrid } from "@/components/bits/magic-bento"
+import { LogoLoop } from "@/components/bits/logo-loop"
 
 /* ── Tiny living illustrations, one per service ─────────────── */
 
@@ -114,29 +115,10 @@ const illustrations: Record<Servicio["id"], () => React.JSX.Element> = {
   redes: RedesIllustration,
 }
 
-/* ── Card with cursor glow ──────────────────────────────────── */
+/* ── Bento card: spotlight, border glow, particles, ripple ──── */
 
 function ServiceCard({ item, index }: { item: Servicio; index: number }) {
-  const ref = useRef<HTMLDivElement>(null)
   const Illustration = illustrations[item.id]
-
-  function onMove(e: MouseEvent<HTMLDivElement>) {
-    const el = ref.current
-    if (!el) return
-    const rect = el.getBoundingClientRect()
-    el.style.setProperty("--mx", `${e.clientX - rect.left}px`)
-    el.style.setProperty("--my", `${e.clientY - rect.top}px`)
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
-    const px = (e.clientX - rect.left) / rect.width - 0.5
-    const py = (e.clientY - rect.top) / rect.height - 0.5
-    el.style.transform = `perspective(900px) rotateX(${(-py * 5).toFixed(2)}deg) rotateY(${(px * 6).toFixed(2)}deg) translateY(-6px)`
-  }
-
-  function onLeave() {
-    const el = ref.current
-    if (!el) return
-    el.style.transform = ""
-  }
 
   return (
     <Reveal delay={index * 100} className="h-full">
@@ -146,20 +128,7 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
         aria-label={`${item.title}: ${item.text} Solicitar diagnóstico`}
         data-cursor="Ver"
       >
-        <div
-          ref={ref}
-          onMouseMove={onMove}
-          onMouseLeave={onLeave}
-          className="group relative flex h-full flex-col gap-6 overflow-hidden rounded-3xl border border-line bg-surface p-6 transition-[transform,border-color,box-shadow] duration-500 ease-[var(--ease-out-expo)] [--mx:-999px] [--my:-999px] hover:border-brand-100 hover:shadow-[0_28px_60px_-28px_rgba(25,81,252,0.35)] sm:p-7"
-        >
-          <div
-            aria-hidden
-            className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-            style={{
-              background:
-                "radial-gradient(360px circle at var(--mx) var(--my), rgba(25,81,252,0.10), transparent 60%)",
-            }}
-          />
+        <BentoCard className="group flex h-full flex-col gap-6 rounded-3xl border border-line bg-surface p-6 hover:border-brand-100 sm:p-7">
           <div className="relative">
             <Illustration />
           </div>
@@ -181,11 +150,26 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
               {item.detail}
             </p>
           </div>
-        </div>
+        </BentoCard>
       </a>
     </Reveal>
   )
 }
+
+const tools = [
+  "WhatsApp",
+  "Google Calendar",
+  "Gmail",
+  "Google Sheets",
+  "Notion",
+  "Make",
+  "Zapier",
+  "HubSpot",
+  "Instagram",
+  "Stripe",
+  "Calendly",
+  "Shopify",
+]
 
 export function Servicios() {
   return (
@@ -203,11 +187,30 @@ export function Servicios() {
           </Reveal>
         </div>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <BentoGrid className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {servicios.items.map((item, i) => (
             <ServiceCard key={item.id} item={item} index={i} />
           ))}
-        </div>
+        </BentoGrid>
+
+        <Reveal delay={120} className="mt-14 flex flex-col gap-5">
+          <p className="text-[11px] font-bold tracking-[0.2em] text-ink-soft uppercase">
+            Conectamos lo que ya usas
+          </p>
+          <LogoLoop
+            speed={40}
+            gap={12}
+            items={tools.map((t) => ({
+              key: t,
+              node: (
+                <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors duration-300 hover:border-brand-600 hover:text-brand-600">
+                  <span className="size-1.5 rounded-full bg-cyan" />
+                  {t}
+                </span>
+              ),
+            }))}
+          />
+        </Reveal>
       </div>
     </section>
   )

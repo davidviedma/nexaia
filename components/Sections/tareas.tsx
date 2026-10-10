@@ -17,6 +17,8 @@ import { Reveal } from "@/components/reveal"
 import { Kicker } from "@/components/section-heading"
 import { useInView } from "@/hooks/use-in-view"
 import { Parallax } from "@/components/motion/parallax"
+import { DecryptedText } from "@/components/bits/text-effects"
+import { StarBorder } from "@/components/bits/surfaces"
 
 const icons = [
   Message01Icon,
@@ -172,19 +174,25 @@ export function Tareas() {
                     </span>
                   </div>
                   <h3 className="text-3xl leading-[1.05] font-bold tracking-[-0.03em] text-balance sm:text-4xl lg:text-5xl">
-                    {current.title}
+                    <DecryptedText text={current.title} speed={26} />
                   </h3>
                   <p className="text-lg text-white/65">{current.problem}</p>
 
-                  <div className="mt-2 rounded-2xl bg-white p-6 text-ink sm:p-7">
-                    <p className="mb-3 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-brand-600 uppercase">
-                      <span className="size-1.5 rounded-full bg-cyan" />
-                      Cómo simplificarla
-                    </p>
-                    <p className="text-xl leading-snug font-bold tracking-tight sm:text-2xl">
-                      {current.solution}
-                    </p>
-                  </div>
+                  <StarBorder
+                    className="mt-2 block w-full rounded-2xl"
+                    color="#06c3d6"
+                    speed={5}
+                  >
+                    <div className="rounded-2xl bg-white p-6 text-ink sm:p-7">
+                      <p className="mb-3 flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-brand-600 uppercase">
+                        <span className="size-1.5 rounded-full bg-cyan" />
+                        Cómo simplificarla
+                      </p>
+                      <p className="text-xl leading-snug font-bold tracking-tight sm:text-2xl">
+                        {current.solution}
+                      </p>
+                    </div>
+                  </StarBorder>
 
                   <p className="flex items-center gap-2 text-sm text-white/60">
                     <HugeiconsIcon

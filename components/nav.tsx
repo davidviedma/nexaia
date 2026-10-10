@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, useRef } from "react"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { HugeiconsIcon } from "@hugeicons/react"
@@ -24,6 +24,9 @@ export function Nav() {
   const [activeSection, setActiveSection] = useState("")
   const [locked, setLocked] = useState(false)
   const [onDark, setOnDark] = useState(true)
+  const [hoverHref, setHoverHref] = useState<string | null>(null)
+  const listRef = useRef<HTMLUListElement>(null)
+  const pillRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     const onScroll = () => {
@@ -85,6 +88,28 @@ export function Nav() {
       ? pathname === "/" && activeSection === href.slice(2)
       : pathname.startsWith(href)
 
+  const pillHref =
+    hoverHref ?? nav.links.find((l) => isLinkActive(l.href))?.href ?? null
+
+  // Slide the pill behind the hovered / active link.
+  useEffect(() => {
+    const list = listRef.current
+    const pill = pillRef.current
+    if (!list || !pill) return
+    const target = pillHref
+      ? list.querySelector<HTMLElement>(`[data-href="${pillHref}"]`)
+      : null
+    if (!target || !expanded) {
+      pill.style.opacity = "0"
+      return
+    }
+    const lr = list.getBoundingClientRect()
+    const tr = target.getBoundingClientRect()
+    pill.style.left = `${tr.left - lr.left}px`
+    pill.style.width = `${tr.width}px`
+    pill.style.opacity = "1"
+  })
+
   const islandWidth = isMobile ? (expanded ? 190 : 60) : expanded ? 760 : 60
 
   return (
@@ -125,29 +150,40 @@ export function Nav() {
 
           {/* Desktop links */}
           <ul
+            ref={listRef}
+            onMouseLeave={() => setHoverHref(null)}
             className={cn(
-              "hidden flex-1 items-center justify-center gap-0.5 md:flex",
+              "relative hidden flex-1 items-center justify-center gap-0.5 md:flex",
               "transition-opacity duration-200",
               expanded
                 ? "opacity-100 delay-150"
                 : "pointer-events-none opacity-0 delay-0"
             )}
           >
+            <div
+              ref={pillRef}
+              aria-hidden
+              className={cn("nav-pill", onDark ? "bg-white/12" : "bg-ink/6")}
+              style={{ opacity: 0, left: 0, width: 0 }}
+            />
             {nav.links.map((link) => {
               const isActive = isLinkActive(link.href)
+              const lit = hoverHref ? hoverHref === link.href : isActive
               return (
-                <li key={link.href}>
+                <li key={link.href} className="relative z-[1]">
                   <Link
                     href={link.href}
+                    data-href={link.href}
+                    onMouseEnter={() => setHoverHref(link.href)}
                     className={cn(
-                      "rounded-full px-3.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors duration-300",
+                      "block rounded-full px-3.5 py-2 text-[14px] font-medium whitespace-nowrap transition-colors duration-300",
                       onDark
-                        ? isActive
-                          ? "bg-white/12 text-white"
-                          : "text-white/70 hover:bg-white/10 hover:text-white"
-                        : isActive
-                          ? "bg-ink/6 text-ink"
-                          : "text-ink-soft hover:bg-ink/5 hover:text-ink"
+                        ? lit
+                          ? "text-white"
+                          : "text-white/70"
+                        : lit
+                          ? "text-ink"
+                          : "text-ink-soft"
                     )}
                   >
                     {link.label}
