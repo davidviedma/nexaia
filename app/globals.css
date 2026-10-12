@@ -883,3 +883,106 @@ html.is-loading .animate-blur-in {
     transition: none;
   }
 }
+
+/* Profile Card (after React Bits): spring tilt, glare and brand holo */
+.profile-card {
+  position: relative;
+  perspective: 1100px;
+  touch-action: pan-y;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.profile-card__body {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+  border-radius: 32px;
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow:
+    inset 0 0 0 1px rgba(11, 27, 51, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.95),
+    0 30px 60px -30px rgba(3, 25, 91, 0.35),
+    0 8px 20px -12px rgba(3, 25, 91, 0.18);
+  transform: rotateX(var(--pc-rx)) rotateY(var(--pc-ry));
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+
+.profile-card__tile {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+  border-radius: 24px;
+  background: #061b3c;
+}
+
+.profile-card__holo,
+.profile-card__glare,
+.profile-card__rim {
+  position: absolute !important;
+  inset: 0;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.profile-card__holo {
+  z-index: 3;
+  background-image:
+    repeating-linear-gradient(
+      100deg,
+      rgba(6, 195, 214, 0) 0%,
+      rgba(6, 195, 214, 0.55) 6%,
+      rgba(55, 129, 252, 0.55) 12%,
+      rgba(203, 233, 253, 0.6) 18%,
+      rgba(6, 195, 214, 0) 24%
+    ),
+    radial-gradient(
+      farthest-corner circle at var(--pc-px) var(--pc-py),
+      rgba(255, 255, 255, 0.25) 0%,
+      rgba(255, 255, 255, 0) 60%
+    );
+  background-size:
+    300% 300%,
+    100% 100%;
+  background-position:
+    var(--pc-band) 50%,
+    center;
+  mix-blend-mode: color-dodge;
+  opacity: calc(0.35 * var(--pc-active) + 0.08);
+}
+
+.profile-card__glare {
+  z-index: 4;
+  background: radial-gradient(
+    farthest-corner circle at var(--pc-px) var(--pc-py),
+    rgba(255, 255, 255, 0.55) 0%,
+    rgba(255, 255, 255, 0.18) 22%,
+    rgba(255, 255, 255, 0) 60%
+  );
+  mix-blend-mode: overlay;
+  opacity: calc(0.9 * var(--pc-active));
+}
+
+.profile-card__rim {
+  z-index: 5;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+}
+
+.profile-card__footer {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 12px 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .profile-card__body {
+    transform: none;
+  }
+}

@@ -14,7 +14,7 @@ import { LogoLoop } from "@/components/bits/logo-loop"
 
 function WebIllustration() {
   return (
-    <div className="relative h-24 w-full overflow-hidden rounded-xl border border-line bg-white shadow-sm">
+    <div className="relative h-28 w-full overflow-hidden rounded-xl border border-line bg-white shadow-sm">
       <div className="flex items-center gap-1.5 border-b border-line px-3 py-2">
         <span className="size-1.5 rounded-full bg-brand-600" />
         <span className="size-1.5 rounded-full bg-brand-600/60" />
@@ -28,6 +28,10 @@ function WebIllustration() {
           className="h-1.5 w-3/4 origin-left rounded-full bg-brand-600"
           style={{ animation: "loadbar 2.4s var(--ease-out-expo) infinite" }}
         />
+        <div className="flex gap-1.5 pt-1">
+          <span className="h-5 w-12 rounded-md bg-brand-600" />
+          <span className="h-5 w-8 rounded-md bg-surface" />
+        </div>
       </div>
     </div>
   )
@@ -40,7 +44,7 @@ function CrmIllustration() {
     { w: "w-1/2", s: "bg-brand-400" },
   ]
   return (
-    <div className="relative flex h-24 w-full flex-col justify-center gap-2 rounded-xl border border-line bg-white p-3 shadow-sm">
+    <div className="relative flex h-28 w-full flex-col justify-center gap-2 rounded-xl border border-line bg-white p-3 shadow-sm">
       {rows.map((r, i) => (
         <div
           key={i}
@@ -61,22 +65,22 @@ function CrmIllustration() {
 
 function AutoIllustration() {
   return (
-    <div className="relative flex h-24 w-full items-center justify-center rounded-xl border border-line bg-white shadow-sm">
-      <div className="relative size-14 rounded-full border-2 border-line">
+    <div className="relative flex h-28 w-full items-center justify-center rounded-xl border border-line bg-white shadow-sm">
+      <div className="relative size-16 rounded-full border-2 border-line">
         <span className="absolute top-1/2 left-1/2 size-1.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink" />
         <span
-          className="absolute top-1/2 left-1/2 h-5 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rounded-full bg-ink"
+          className="absolute top-1/2 left-1/2 h-6 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rounded-full bg-ink"
           style={{ animation: "spin-slow 8s linear infinite" }}
         />
         <span
-          className="absolute top-1/2 left-1/2 h-4 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rounded-full bg-brand-600"
+          className="absolute top-1/2 left-1/2 h-5 w-0.5 origin-bottom -translate-x-1/2 -translate-y-full rounded-full bg-brand-600"
           style={{ animation: "spin-slow 2s linear infinite" }}
         />
         <span
           className="absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan"
           style={{
             animation: "orbit 4s linear infinite",
-            ["--orbit-r" as string]: "34px",
+            ["--orbit-r" as string]: "38px",
           }}
         />
       </div>
@@ -86,7 +90,7 @@ function AutoIllustration() {
 
 function IaIllustration() {
   return (
-    <div className="relative flex h-24 w-full flex-col justify-center gap-2 rounded-xl border border-line bg-white p-3 shadow-sm">
+    <div className="relative flex h-28 w-full flex-col justify-center gap-2 rounded-xl border border-line bg-white p-3 shadow-sm">
       <div className="w-fit max-w-[70%] rounded-2xl rounded-bl-sm bg-surface px-3 py-1.5">
         <span className="block h-1.5 w-20 rounded-full bg-ink/60" />
       </div>
@@ -103,6 +107,9 @@ function IaIllustration() {
             />
           ))}
         </span>
+      </div>
+      <div className="w-fit max-w-[60%] rounded-2xl rounded-bl-sm bg-surface px-3 py-1.5">
+        <span className="block h-1.5 w-12 rounded-full bg-ink/40" />
       </div>
     </div>
   )
@@ -131,7 +138,7 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
           <div className="relative">
             <Illustration />
           </div>
-          <div className="relative mt-auto flex flex-col gap-2">
+          <div className="relative mt-auto flex flex-col gap-1.5">
             <div className="flex items-center justify-between">
               <h3 className="text-2xl font-bold tracking-tight text-ink">
                 {item.title}
@@ -145,7 +152,7 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
               </span>
             </div>
             <p className="text-base text-ink-soft">{item.text}</p>
-            <p className="max-h-0 overflow-hidden text-sm leading-relaxed text-ink-soft/80 opacity-0 transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:max-h-24 group-hover:pt-2 group-hover:opacity-100">
+            <p className="max-h-0 overflow-hidden text-sm leading-relaxed text-ink-soft/80 opacity-0 transition-all duration-500 ease-[var(--ease-out-expo)] group-hover:max-h-16 group-hover:pt-1 group-hover:opacity-100">
               {item.detail}
             </p>
           </div>
@@ -155,36 +162,16 @@ function ServiceCard({ item, index }: { item: Servicio; index: number }) {
   )
 }
 
-const tools = [
-  "WhatsApp",
-  "Google Calendar",
-  "Gmail",
-  "Google Sheets",
-  "Notion",
-  "Make",
-  "Zapier",
-  "HubSpot",
-  "Instagram",
-  "Stripe",
-  "Calendly",
-  "Shopify",
-]
-
 export function Servicios() {
   return (
-    <section id="servicios" className="relative bg-white py-24 lg:py-36">
+    <section id="servicios" className="relative bg-white py-24 lg:py-32">
       <div className="container mx-auto px-6 sm:px-10 lg:px-16">
-        <div className="mb-14 flex flex-col gap-8 lg:mb-20 lg:flex-row lg:items-end lg:justify-between">
-          <SectionHeading
-            kicker={servicios.kicker}
-            lines={["Herramientas para", "tu día a día."]}
-          />
-          <Reveal delay={200} className="lg:max-w-xs lg:pb-2">
-            <p className="border-l-2 border-cyan pl-4 text-base text-ink-soft">
-              {servicios.note}
-            </p>
-          </Reveal>
-        </div>
+        <SectionHeading
+          kicker={servicios.kicker}
+          lines={servicios.title}
+          align="center"
+          className="mx-auto mb-12 lg:mb-16"
+        />
 
         <BentoGrid className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {servicios.items.map((item, i) => (
@@ -192,14 +179,15 @@ export function Servicios() {
           ))}
         </BentoGrid>
 
-        <Reveal delay={120} className="mt-14 flex flex-col gap-5">
+        <Reveal delay={120} className="mt-12 flex flex-col items-center gap-5">
           <p className="text-[11px] font-bold tracking-[0.2em] text-ink-soft uppercase">
-            Conectamos lo que ya usas
+            {servicios.toolsLabel}
           </p>
           <LogoLoop
+            className="w-full"
             speed={40}
             gap={12}
-            items={tools.map((t) => ({
+            items={servicios.tools.map((t) => ({
               key: t,
               node: (
                 <span className="inline-flex items-center gap-2 rounded-full border border-line bg-white px-4 py-2 text-sm font-semibold text-ink transition-colors duration-300 hover:border-brand-600 hover:text-brand-600">
@@ -210,66 +198,6 @@ export function Servicios() {
             }))}
           />
         </Reveal>
-
-        {/* Automatización vs IA aplicada */}
-        <div className="mt-20 grid grid-cols-1 gap-8 lg:grid-cols-12 lg:gap-10">
-          <div className="lg:col-span-4">
-            <SectionHeading
-              kicker={servicios.compare.kicker}
-              lines={["Cada tarea pide", "una solución distinta."]}
-              text={servicios.compare.text}
-            />
-          </div>
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:col-span-8">
-            {servicios.compare.items.map((c, i) => (
-              <Reveal key={c.title} delay={i * 120} className="h-full">
-                <div
-                  className={cn(
-                    "flex h-full flex-col gap-5 rounded-[1.75rem] border p-6 sm:p-7",
-                    i === 0
-                      ? "border-line bg-surface"
-                      : "border-navy bg-navy text-white"
-                  )}
-                >
-                  <p
-                    className={cn(
-                      "text-[11px] font-bold tracking-[0.2em] uppercase",
-                      i === 0 ? "text-brand-600" : "text-cyan"
-                    )}
-                  >
-                    {c.title}
-                  </p>
-                  <div className="flex flex-wrap items-center gap-3 text-xl font-bold tracking-tight sm:text-2xl">
-                    <span>{c.from}</span>
-                    <HugeiconsIcon
-                      icon={ArrowUpRight01Icon}
-                      size={18}
-                      className={cn(
-                        "rotate-45",
-                        i === 0 ? "text-brand-600" : "text-cyan"
-                      )}
-                    />
-                    <span>{c.to}</span>
-                  </div>
-                  <p
-                    className={cn(
-                      "text-base",
-                      i === 0 ? "text-ink-soft" : "text-white/70"
-                    )}
-                  >
-                    {c.text}
-                  </p>
-                </div>
-              </Reveal>
-            ))}
-            <Reveal delay={260} className="sm:col-span-2">
-              <p className="flex items-center gap-3 text-sm text-ink-soft">
-                <span className="h-px w-8 bg-cyan" />
-                {servicios.compare.footer}
-              </p>
-            </Reveal>
-          </div>
-        </div>
       </div>
     </section>
   )

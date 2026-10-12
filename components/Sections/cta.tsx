@@ -81,17 +81,10 @@ export function Cta() {
               </p>
             </Reveal>
             <Reveal delay={320}>
-              <ul className="flex flex-col gap-2 text-lg font-semibold">
-                {cta.questions.map((q) => (
-                  <li key={q} className="flex items-center gap-3">
-                    <span className="size-2 rounded-full bg-cyan" />
-                    {q}
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-            <Reveal delay={400}>
-              <p className="text-sm text-white/65">{cta.footer}</p>
+              <p className="flex items-center gap-3 text-sm text-white/65">
+                <span className="h-px w-8 bg-cyan" />
+                {cta.footer}
+              </p>
             </Reveal>
           </div>
 

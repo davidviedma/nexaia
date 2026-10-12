@@ -1,5 +1,4 @@
 import { testimonios } from "@/lib/content"
-import { cn } from "@/lib/utils"
 import { Reveal } from "@/components/reveal"
 import { SectionHeading } from "@/components/section-heading"
 import { LogoLoop } from "@/components/bits/logo-loop"
@@ -24,7 +23,7 @@ function Stars() {
   )
 }
 
-function Card({ t, placeholder }: { t: Testimonio; placeholder: boolean }) {
+function Card({ t }: { t: Testimonio }) {
   const initials = t.name
     .split(" ")
     .map((n) => n[0])
@@ -34,13 +33,8 @@ function Card({ t, placeholder }: { t: Testimonio; placeholder: boolean }) {
     <figure className="flex w-[21rem] shrink-0 flex-col gap-5 rounded-[1.75rem] border border-white/10 bg-white/[0.05] p-6 text-white transition-colors duration-300 hover:bg-white/[0.09] sm:w-[24rem]">
       <div className="flex items-center justify-between">
         <Stars />
-        <span
-          className={cn(
-            "rounded-full px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] uppercase",
-            placeholder ? "bg-cyan/15 text-cyan" : "bg-white/10 text-white/70"
-          )}
-        >
-          {placeholder ? "Ejemplo" : t.service}
+        <span className="rounded-full bg-white/10 px-2.5 py-1 text-[10px] font-bold tracking-[0.16em] text-white/70 uppercase">
+          {t.service}
         </span>
       </div>
       <blockquote className="text-[1.05rem] leading-relaxed text-white/90">
@@ -98,7 +92,7 @@ export function Testimonios() {
                 ))}
               </span>
               <span className="text-sm text-white/75">
-                Peluquerías, clínicas, asesorías, talleres y autónomos.
+                {testimonios.tagline}
               </span>
             </div>
           </Reveal>
@@ -112,7 +106,7 @@ export function Testimonios() {
           fadeClassName="from-navy"
           items={row1.map((t) => ({
             key: t.name,
-            node: <Card t={t} placeholder={testimonios.placeholder} />,
+            node: <Card t={t} />,
           }))}
         />
         <LogoLoop
@@ -122,17 +116,10 @@ export function Testimonios() {
           fadeClassName="from-navy"
           items={row2.map((t) => ({
             key: t.name,
-            node: <Card t={t} placeholder={testimonios.placeholder} />,
+            node: <Card t={t} />,
           }))}
         />
       </div>
-
-      {testimonios.placeholder && (
-        <p className="relative z-[2] container mx-auto mt-10 px-6 text-xs text-white/45 sm:px-10 lg:px-16">
-          Testimonios de ejemplo para ilustrar el diseño. Se sustituirán por
-          reseñas reales de clientes.
-        </p>
-      )}
     </section>
   )
 }

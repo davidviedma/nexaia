@@ -45,3 +45,26 @@ export const diagnosticoMailto = (fields?: {
   ].join("\n")
   return `mailto:${site.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
 }
+
+/**
+ * Fundadores. TODO (Nexa IA): nombre, rol y foto de cada uno.
+ * `photo` es una ruta en /public (p. ej. "/fundador-1.jpg"); vacía = ilustración.
+ */
+export const founders = [
+  {
+    name: "", // TODO: nombre
+    role: "Cofundador", // TODO: rol
+    focus: "Tecnología avanzada",
+    text: "IA, automatización y datos.",
+    photo: "",
+    art: "nodes",
+  },
+  {
+    name: "", // TODO: nombre
+    role: "Cofundador", // TODO: rol
+    focus: "Trato cercano",
+    text: "Negocio, clientes y acompañamiento.",
+    photo: "",
+    art: "rings",
+  },
+] as const

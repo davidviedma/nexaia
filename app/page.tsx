@@ -3,7 +3,6 @@ import { Ticker } from "@/components/ticker"
 import { Hero } from "@/components/Sections/hero"
 import { Mision } from "@/components/Sections/mision"
 import { Servicios } from "@/components/Sections/servicios"
-import { Tareas } from "@/components/Sections/tareas"
 import { Proceso } from "@/components/Sections/proceso"
 import { Diagnostico } from "@/components/Sections/diagnostico"
 import { Resultados } from "@/components/Sections/resultados"
@@ -39,7 +38,6 @@ export default function Page() {
         <Ticker />
         <Mision />
         <Servicios />
-        <Tareas />
         <Proceso />
         <Diagnostico />
         <Resultados />

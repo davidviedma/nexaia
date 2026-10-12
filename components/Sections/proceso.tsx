@@ -124,19 +124,14 @@ export function Proceso() {
               <div className="flex flex-col gap-5">
                 <Kicker>{proceso.kicker}</Kicker>
                 <RevealLines
-                  lines={["Primero entendemos", "tu negocio."]}
+                  lines={proceso.title}
                   delay={80}
                   className="text-4xl leading-[1.02] font-bold tracking-[-0.03em] text-balance text-ink sm:text-5xl lg:text-6xl"
                 />
               </div>
-              <div className="flex items-center gap-4 lg:pb-2">
-                <p className="max-w-xs text-base text-ink-soft">
-                  {proceso.text}
-                </p>
-                <span className="hidden shrink-0 rounded-full border border-line px-3 py-1.5 text-xs font-bold text-ink tabular-nums sm:inline-flex">
-                  Paso {String(current + 1).padStart(2, "0")} / 0{n}
-                </span>
-              </div>
+              <span className="hidden w-fit shrink-0 rounded-full border border-line px-3.5 py-2 text-xs font-bold text-ink tabular-nums sm:inline-flex lg:mb-2">
+                Paso {String(current + 1).padStart(2, "0")} / 0{n}
+              </span>
             </div>
 
             {/* Steps */}
@@ -144,11 +139,11 @@ export function Proceso() {
               {/* Desktop connector through the icon row */}
               <div
                 aria-hidden
-                className="absolute top-[4.1rem] right-6 left-6 hidden h-px bg-line lg:block"
+                className="absolute top-[4.6rem] right-6 left-6 hidden h-px bg-line lg:block"
               />
               <div
                 aria-hidden
-                className="absolute top-[4.1rem] right-6 left-6 hidden h-px origin-left bg-brand-600 lg:block"
+                className="absolute top-[4.6rem] right-6 left-6 hidden h-px origin-left bg-brand-600 lg:block"
                 style={{ transform: `scaleX(${progress})` }}
               />
               {/* Mobile connector */}
@@ -171,7 +166,7 @@ export function Proceso() {
                     <li
                       key={s.title}
                       className={cn(
-                        "relative flex flex-col gap-5 rounded-[1.75rem] border p-6 transition-all duration-500 ease-[var(--ease-out-expo)] lg:gap-6",
+                        "relative flex flex-col gap-6 rounded-[1.75rem] border p-6 transition-all duration-500 ease-[var(--ease-out-expo)] lg:min-h-[17rem] lg:gap-8 lg:p-7",
                         active
                           ? "-translate-y-1 border-brand-600 bg-white shadow-[0_28px_60px_-28px_rgba(25,81,252,0.45)]"
                           : done
@@ -192,16 +187,16 @@ export function Proceso() {
 
                       <span
                         className={cn(
-                          "relative z-[1] flex size-12 items-center justify-center rounded-2xl border transition-all duration-500 ease-[var(--ease-out-expo)]",
+                          "relative z-[1] flex size-14 items-center justify-center rounded-2xl border transition-all duration-500 ease-[var(--ease-out-expo)]",
                           lit
                             ? "border-brand-600 bg-brand-600 text-white shadow-[0_0_0_6px_rgba(25,81,252,0.12)]"
                             : "border-line bg-white text-ink-soft"
                         )}
                       >
-                        <HugeiconsIcon icon={icons[i]} size={22} />
+                        <HugeiconsIcon icon={icons[i]} size={24} />
                       </span>
 
-                      <div className="flex flex-col gap-2">
+                      <div className="mt-auto flex flex-col gap-2">
                         <h3
                           className={cn(
                             "text-2xl font-bold tracking-tight transition-colors duration-500",
@@ -219,28 +214,6 @@ export function Proceso() {
                           {s.text}
                         </p>
                       </div>
-
-                      <ul
-                        className={cn(
-                          "flex flex-col gap-2 transition-opacity duration-500",
-                          lit ? "opacity-100" : "opacity-50"
-                        )}
-                      >
-                        {s.points.map((pt) => (
-                          <li
-                            key={pt}
-                            className="flex items-start gap-2.5 text-sm text-ink"
-                          >
-                            <span
-                              className={cn(
-                                "mt-1.5 size-1.5 shrink-0 rounded-full transition-colors duration-500",
-                                lit ? "bg-cyan" : "bg-line"
-                              )}
-                            />
-                            {pt}
-                          </li>
-                        ))}
-                      </ul>
                     </li>
                   )
                 })}
